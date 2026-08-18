@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Mail, MapPin } from 'lucide-react';
+import NewsletterForm from '@/components/ui/NewsletterForm';
 
 const columns = [
   {
@@ -11,6 +12,7 @@ const columns = [
       { href: '/about', label: 'Why Us' },
       { href: '/portfolio', label: 'Portfolio' },
       { href: '/tech', label: 'Tech Stack' },
+      { href: '/blog', label: 'Blog' },
     ],
   },
   {
@@ -34,7 +36,7 @@ export default function Footer() {
   return (
     <footer className="relative z-10 border-t border-slate-900 bg-[#050608] px-6 py-16 text-slate-400">
       <div className="mx-auto max-w-7xl">
-        <div className="grid gap-12 md:grid-cols-[2fr_1fr_1fr]">
+        <div className="grid gap-12 md:grid-cols-[2fr_1fr_1fr_1.4fr]">
           <div>
             <Link href="/" className="flex items-center gap-2 text-xl font-bold text-white">
               <span className="flex h-7 w-7 items-center justify-center rounded-md bg-cyan-400 font-mono text-xs font-black text-black">
@@ -72,11 +74,25 @@ export default function Footer() {
               </ul>
             </div>
           ))}
+
+          <div>
+            <h3 className="text-xs font-bold uppercase tracking-widest text-slate-500">Stay in the loop</h3>
+            <p className="mt-4 text-sm leading-relaxed">
+              Occasional notes on new projects, blog posts and what we&apos;re building. No spam.
+            </p>
+            <div className="mt-4">
+              <NewsletterForm />
+            </div>
+          </div>
         </div>
 
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-slate-900 pt-8 text-xs sm:flex-row">
           <p>&copy; {new Date().getFullYear()} 24xDev (24xdev.co.uk). Based in Sheffield, UK. Led by Gurmanpreet Singh.</p>
-          <p>Built with Next.js, deployed on Vercel.</p>
+          <div className="flex items-center gap-5">
+            <Link href="/privacy" className="hover:text-cyan-400">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-cyan-400">Terms of Service</Link>
+            <p>Built with Next.js, deployed on Vercel.</p>
+          </div>
         </div>
       </div>
     </footer>

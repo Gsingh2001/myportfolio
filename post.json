@@ -1,0 +1,11 @@
+{
+  "slug": "my-first-post",
+  "title": "My First Post",
+  "excerpt": "A short one-liner summary for the blog list page.",
+  "content": "Full post body **in Markdown** here.\n\n- supports lists\n- and [links](https://example.com)",
+  "coverImage": "https://your-image-host.com/path/to/image.jpg",
+  "tags": ["Announcements"],
+  "published": true
+}
+
+

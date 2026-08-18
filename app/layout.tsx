@@ -1,11 +1,14 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import BackgroundGlow from '@/components/ui/BackgroundGlow';
 import ScrollProgress from '@/components/ui/ScrollProgress';
 import FloatingCTA from '@/components/ui/FloatingCTA';
+import CookieConsent from '@/components/ui/CookieConsent';
 import OrganizationSchema from '@/components/seo/OrganizationSchema';
 import { ThemeProvider } from '@/components/ThemeProvider';
 // ThemeToggle is not imported here because it is rendered inside Navbar instead
@@ -40,8 +43,23 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: '24xDev' }],
   creator: '24xDev',
+  publisher: '24xDev',
+  formatDetection: {
+    telephone: false,
+  },
   alternates: {
     canonical: '/',
+  },
+  icons: {
+    icon: [
+      { url: '/logo/favicon.ico', sizes: 'any' },
+      { url: '/logo/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/logo/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/logo/android-chrome-192x192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/logo/android-chrome-512x512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [{ url: '/logo/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
+    shortcut: ['/logo/favicon.ico'],
   },
   openGraph: {
     type: 'website',
@@ -56,6 +74,16 @@ export const metadata: Metadata = {
     title: defaultTitle,
     description: defaultDescription,
   },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  colorScheme: 'light dark',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#07080c' },
+  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -75,7 +103,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
           <Footer />
           <FloatingCTA />
+          <CookieConsent />
         </ThemeProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
