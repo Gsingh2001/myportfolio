@@ -34,11 +34,11 @@ export default function TableOfContents({ headings }: { headings: TocHeading[] }
   if (headings.length < 2) return null;
 
   return (
-    <nav className="sticky top-28 hidden max-h-[calc(100vh-8rem)] overflow-y-auto rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40 lg:block">
-      <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-500">
+    <nav className="sticky top-28 hidden max-h-[calc(100vh-8rem)] overflow-y-auto rounded border border-line bg-surface p-5 lg:block">
+      <p className="flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-widest text-ink-secondary">
         <List className="h-3.5 w-3.5" /> On this page
       </p>
-      <ul className="mt-4 space-y-1 border-l border-slate-200 dark:border-slate-800">
+      <ul className="mt-4 space-y-1 border-l border-line">
         {headings.map((heading) => (
           <li key={heading.id}>
             <a
@@ -47,8 +47,8 @@ export default function TableOfContents({ headings }: { headings: TocHeading[] }
                 'block border-l-2 py-1.5 text-sm leading-snug transition-colors',
                 heading.level === 3 ? 'pl-7' : 'pl-4',
                 activeId === heading.id
-                  ? '-ml-px border-cyan-500 font-semibold text-cyan-600 dark:text-cyan-400'
-                  : '-ml-px border-transparent text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200',
+                  ? '-ml-px border-accent font-semibold text-accent'
+                  : '-ml-px border-transparent text-ink-secondary hover:text-ink',
               )}
             >
               {heading.text}

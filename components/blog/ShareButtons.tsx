@@ -22,14 +22,14 @@ export default function ShareButtons({ url, title }: { url: string; title: strin
 
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-500">
+      <span className="flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-wider text-ink-secondary">
         <Share2 className="h-3.5 w-3.5" /> Share
       </span>
       <a
         href={twitterHref}
         target="_blank"
         rel="noopener noreferrer"
-        className="rounded-full border border-slate-200 px-4 py-1.5 text-xs font-bold text-slate-600 transition-colors hover:border-cyan-300 hover:text-cyan-600 dark:border-slate-800 dark:text-slate-300 dark:hover:border-cyan-500/40 dark:hover:text-cyan-400"
+        className="rounded border border-line px-4 py-1.5 font-mono text-xs font-bold text-ink-secondary transition-colors hover:border-accent hover:text-accent"
       >
         X
       </a>
@@ -37,18 +37,18 @@ export default function ShareButtons({ url, title }: { url: string; title: strin
         href={linkedinHref}
         target="_blank"
         rel="noopener noreferrer"
-        className="rounded-full border border-slate-200 px-4 py-1.5 text-xs font-bold text-slate-600 transition-colors hover:border-cyan-300 hover:text-cyan-600 dark:border-slate-800 dark:text-slate-300 dark:hover:border-cyan-500/40 dark:hover:text-cyan-400"
+        className="rounded border border-line px-4 py-1.5 font-mono text-xs font-bold text-ink-secondary transition-colors hover:border-accent hover:text-accent"
       >
         LinkedIn
       </a>
       <button
         type="button"
         onClick={handleCopy}
-        className="flex items-center gap-1.5 rounded-full border border-slate-200 px-4 py-1.5 text-xs font-bold text-slate-600 transition-colors hover:border-cyan-300 hover:text-cyan-600 dark:border-slate-800 dark:text-slate-300 dark:hover:border-cyan-500/40 dark:hover:text-cyan-400"
+        className="flex items-center gap-1.5 rounded border border-line px-4 py-1.5 font-mono text-xs font-bold text-ink-secondary transition-colors hover:border-accent hover:text-accent"
       >
         {copied ? (
           <>
-            <Check className="h-3.5 w-3.5 text-cyan-500" /> Copied
+            <Check className="h-3.5 w-3.5 text-accent" /> Copied
           </>
         ) : (
           <>

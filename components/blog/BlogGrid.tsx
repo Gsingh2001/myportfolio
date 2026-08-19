@@ -3,7 +3,8 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Calendar, Clock } from 'lucide-react';
-import { clsx } from 'clsx';
+import { cn } from '@/lib/cn';
+import Tag from '@/components/ui/Tag';
 
 type PostSummary = {
   slug: string;
@@ -33,11 +34,11 @@ export default function BlogGrid({ posts }: { posts: PostSummary[] }) {
           <button
             type="button"
             onClick={() => setActiveTag(null)}
-            className={clsx(
-              'rounded-full px-4 py-1.5 text-xs font-bold transition-colors',
+            className={cn(
+              'rounded border px-4 py-1.5 font-mono text-xs font-bold uppercase tracking-wide transition-colors',
               activeTag === null
-                ? 'bg-slate-900 text-white dark:bg-white dark:text-black'
-                : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700',
+                ? 'border-ink bg-ink text-paper'
+                : 'border-line text-ink-secondary hover:border-ink hover:text-ink',
             )}
           >
             All
@@ -47,11 +48,11 @@ export default function BlogGrid({ posts }: { posts: PostSummary[] }) {
               key={tag}
               type="button"
               onClick={() => setActiveTag(tag)}
-              className={clsx(
-                'rounded-full px-4 py-1.5 text-xs font-bold transition-colors',
+              className={cn(
+                'rounded border px-4 py-1.5 font-mono text-xs font-bold uppercase tracking-wide transition-colors',
                 activeTag === tag
-                  ? 'bg-cyan-500 text-black'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700',
+                  ? 'border-accent bg-accent text-accent-ink'
+                  : 'border-line text-ink-secondary hover:border-accent hover:text-accent',
               )}
             >
               {tag}
@@ -61,18 +62,16 @@ export default function BlogGrid({ posts }: { posts: PostSummary[] }) {
       )}
 
       {filtered.length === 0 ? (
-        <p className="mt-10 text-sm text-slate-500 dark:text-slate-400">
-          No posts tagged &ldquo;{activeTag}&rdquo; yet.
-        </p>
+        <p className="mt-10 text-sm text-ink-secondary">No posts tagged &ldquo;{activeTag}&rdquo; yet.</p>
       ) : (
         <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filtered.map((post) => (
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300 dark:border-slate-800 dark:bg-slate-900/40 shadow-sm hover:shadow-xl dark:hover:shadow-cyan-500/10 dark:hover:border-cyan-500/40"
+              className="group relative flex h-full flex-col overflow-hidden rounded border border-line bg-surface transition-colors hover:border-accent"
             >
-              <div className="relative h-44 w-full overflow-hidden bg-gradient-to-br from-slate-800 via-slate-900 to-black">
+              <div className="relative h-44 w-full overflow-hidden border-b border-line bg-surface-alt">
                 {post.cover_image ? (
                   <img
                     src={post.cover_image}
@@ -82,14 +81,14 @@ export default function BlogGrid({ posts }: { posts: PostSummary[] }) {
                   />
                 ) : (
                   <div className="flex h-full w-full items-center justify-center">
-                    <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 font-mono text-lg font-black text-black">
+                    <span className="flex h-12 w-12 items-center justify-center rounded border-2 border-ink font-mono text-lg font-black text-ink">
                       24
                     </span>
                   </div>
                 )}
               </div>
               <div className="flex flex-1 flex-col p-7">
-                <div className="flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-500">
+                <div className="flex flex-wrap items-center gap-3 font-mono text-xs font-bold uppercase tracking-wider text-ink-secondary">
                   <span className="flex items-center gap-1.5">
                     <Calendar className="h-3.5 w-3.5" />
                     {new Date(post.published_at).toLocaleDateString('en-GB', {
@@ -103,25 +102,20 @@ export default function BlogGrid({ posts }: { posts: PostSummary[] }) {
                     {post.readingTime} min read
                   </span>
                 </div>
-                <h2 className="mt-3 text-lg font-black text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
+                <h2 className="mt-3 font-display text-lg font-semibold text-ink group-hover:text-accent">
                   {post.title}
                 </h2>
-                <p className="mt-3 flex-1 text-sm text-slate-600 dark:text-slate-400 leading-relaxed line-clamp-3">
-                  {post.excerpt}
-                </p>
+                <p className="mt-3 flex-1 text-sm leading-relaxed text-ink-secondary line-clamp-3">{post.excerpt}</p>
                 {post.tags?.length > 0 && (
                   <div className="mt-5 flex flex-wrap gap-2">
                     {post.tags.slice(0, 3).map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full bg-slate-100 dark:bg-slate-800 px-3 py-1 text-xs font-semibold text-slate-600 dark:text-slate-300"
-                      >
+                      <Tag key={tag} tone="outline">
                         {tag}
-                      </span>
+                      </Tag>
                     ))}
                   </div>
                 )}
-                <div className="mt-5 flex items-center gap-2 text-xs font-bold text-cyan-600 dark:text-cyan-400">
+                <div className="mt-5 flex items-center gap-2 font-mono text-xs font-bold text-accent">
                   Read more <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                 </div>
               </div>

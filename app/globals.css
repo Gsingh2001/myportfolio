@@ -1,37 +1,64 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
+/*
+ * "Drafting Table" design tokens — a warm paper/ink palette with a single
+ * signal-orange accent, replacing the old dark-slate + cyan/blue system.
+ *
+ * IMPORTANT: this MUST stay `@theme inline`, never plain `@theme`. `inline`
+ * keeps these references live against the runtime values `.dark` toggles
+ * and next/font injects — a plain `@theme` bakes them in at parse time and
+ * silently breaks both dark mode and the font variables.
+ */
 :root {
   color-scheme: light;
+  --paper: #f6f3ec;
+  --surface: #ffffff;
+  --surface-alt: #fbf9f4;
+  --ink: #1c1a16;
+  --ink-secondary: #5b564c;
+  --line: rgba(28, 26, 22, 0.14);
+  --accent: #e8501a;
+  --accent-hover: #c63f12;
+  --accent-ink: #fff8ee;
+  --accent-soft: #8a7b4e;
 }
-
 .dark {
   color-scheme: dark;
+  --paper: #15130f;
+  --surface: #1e1b15;
+  --surface-alt: #221f18;
+  --ink: #ede7d8;
+  --ink-secondary: #a69c89;
+  --line: rgba(237, 231, 216, 0.14);
+  --accent: #e8501a;
+  --accent-hover: #ff6b34;
+  --accent-ink: #1c1a16;
+  --accent-soft: #a69569;
 }
 
 @theme inline {
-  --font-sans: var(--font-inter);
-  --font-mono: var(--font-jetbrains-mono);
-}
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-surface-alt: var(--surface-alt);
+  --color-ink: var(--ink);
+  --color-ink-secondary: var(--ink-secondary);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
 
-/*
- * No custom `body { background; color }` rule here on purpose. Tailwind v4
- * emits its utilities inside CSS cascade layers, and ANY plain rule written
- * outside an `@layer` block — even a low-specificity element selector like
- * `body {}` — beats every layered utility class regardless of specificity.
- * A rule like that here would silently override the `bg-slate-50
- * dark:bg-[#07080c]` classes already set on <body> in app/layout.tsx and
- * pin the whole site to light mode no matter what theme is active. Body
- * background/text colour is intentionally set only via Tailwind classes on
- * the <body> element itself.
- */
+  --font-sans: var(--font-public-sans);
+  --font-mono: var(--font-jetbrains-mono);
+  --font-display: var(--font-fraunces);
+}
 
 ::selection {
-  background: #06b6d4;
-  color: #000;
+  background: var(--accent);
+  color: var(--accent-ink);
 }
 
-/* Slim, brand-tinted scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -39,64 +66,41 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(6, 182, 212, 0.35);
-  border-radius: 9999px;
+  background: rgba(232, 80, 26, 0.45);
+  border-radius: 0;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(6, 182, 212, 0.55);
+  background: rgba(232, 80, 26, 0.65);
 }
 
-/* -------------------------------------------------------------------- */
-/* Attention-seeking motion utilities                                   */
-/* -------------------------------------------------------------------- */
-
-/* Animated gradient headline text */
-@keyframes gradient-flow {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-.text-gradient-flow {
-  background-size: 200% auto;
-  animation: gradient-flow 6s ease-in-out infinite;
+/* Faint ink graph-paper backdrop — replaces the old blurred cyan/blue orbs. */
+.grid-texture {
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
-/* Pulsing glow ring for primary CTAs */
-@keyframes cta-pulse {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.45);
-  }
-  50% {
-    box-shadow: 0 0 0 10px rgba(6, 182, 212, 0);
-  }
+/* "Stamped" hover/press interaction — a hard-offset shadow that shifts on
+   hover/active, used instead of soft colored glow shadows. */
+.stamp-shadow {
+  box-shadow: 4px 4px 0 0 var(--ink);
+  transition: transform 150ms ease, box-shadow 150ms ease;
 }
-.cta-glow {
-  animation: cta-pulse 2.6s ease-in-out infinite;
+.stamp-shadow:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 0 var(--ink);
 }
-
-/* Gentle float for the sticky quote button */
-@keyframes float-y {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
-}
-.animate-float {
-  animation: float-y 3.5s ease-in-out infinite;
+.stamp-shadow:active {
+  transform: translate(0, 0);
+  box-shadow: 2px 2px 0 0 var(--ink);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .text-gradient-flow,
-  .cta-glow,
-  .animate-float {
-    animation: none;
+  .stamp-shadow,
+  .stamp-shadow:hover,
+  .stamp-shadow:active {
+    transition: none;
+    transform: none;
   }
 }

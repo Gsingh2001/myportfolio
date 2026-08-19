@@ -36,12 +36,12 @@ export default function CookieConsent() {
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-[70] px-4 pb-4 sm:px-6">
-      <div className="mx-auto flex max-w-3xl flex-col items-start gap-3 rounded-2xl border border-slate-800 bg-[#0a0b0f]/95 p-5 shadow-2xl backdrop-blur-xl sm:flex-row sm:items-center">
-        <Cookie className="h-5 w-5 shrink-0 text-cyan-400" />
-        <p className="flex-1 text-sm text-slate-300">
+      <div className="mx-auto flex max-w-3xl flex-col items-start gap-3 rounded border border-line bg-surface p-5 shadow-none sm:flex-row sm:items-center">
+        <Cookie className="h-5 w-5 shrink-0 text-accent" />
+        <p className="flex-1 text-sm text-ink-secondary">
           We use privacy-friendly, cookieless analytics to understand traffic — no ad trackers,
           ever. See our{' '}
-          <Link href="/privacy" className="font-semibold text-cyan-400 hover:underline">
+          <Link href="/privacy" className="font-semibold text-accent hover:underline">
             Privacy Policy
           </Link>{' '}
           for details.
@@ -49,7 +49,7 @@ export default function CookieConsent() {
         <button
           type="button"
           onClick={dismiss}
-          className="flex shrink-0 items-center gap-1.5 rounded-lg bg-cyan-400 px-4 py-2 text-xs font-black text-black transition-transform hover:scale-105"
+          className="stamp-shadow flex shrink-0 items-center gap-1.5 rounded bg-accent px-4 py-2 font-mono text-xs font-bold uppercase tracking-wide text-accent-ink"
         >
           Got it <X className="h-3.5 w-3.5" />
         </button>

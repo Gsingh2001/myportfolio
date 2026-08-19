@@ -1,7 +1,10 @@
-import Link from 'next/link';
 import type { Metadata } from 'next';
 import { ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
 import Reveal from '@/components/ui/Reveal';
+import Eyebrow from '@/components/ui/Eyebrow';
+import Panel from '@/components/ui/Panel';
+import Button from '@/components/ui/Button';
+import { cn } from '@/lib/cn';
 
 export const metadata: Metadata = {
   title: 'Pricing | Fixed-Scope Web & AI Quotes, UK-Wide',
@@ -94,19 +97,19 @@ const faqSchema = {
 
 export default function PricingPage() {
   return (
-    <div className="px-6 py-20 md:py-28 bg-slate-50 dark:bg-[#07080c] transition-colors duration-300">
+    <div className="bg-paper px-6 py-20 transition-colors duration-300 md:py-28">
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="mx-auto max-w-7xl">
-        <Reveal className="text-center max-w-2xl mx-auto">
-          <p className="text-xs font-bold uppercase tracking-widest text-cyan-600 dark:text-cyan-400">Pricing</p>
-          <h1 className="mt-3 text-4xl font-black text-slate-900 dark:text-white sm:text-5xl transition-colors duration-300">
+        <Reveal className="mx-auto max-w-2xl text-center">
+          <Eyebrow className="text-center">Pricing</Eyebrow>
+          <h1 className="mt-3 font-display text-4xl font-semibold text-ink sm:text-5xl">
             Clear pricing. No surprises.
           </h1>
-          <p className="mt-4 text-slate-600 dark:text-slate-400 transition-colors duration-300">
+          <p className="mt-4 text-ink-secondary">
             Every project gets a fixed-scope quote after a free discovery call. The guide prices below show where
             most projects start.
           </p>
@@ -114,63 +117,55 @@ export default function PricingPage() {
 
         <div className="mt-16 grid gap-8 lg:grid-cols-3 lg:items-start">
           {tiers.map((tier, idx) => (
-            <Reveal key={tier.name} delay={idx * 0.1} scale={tier.highlight}>
+            <Reveal key={tier.name} delay={idx * 0.1}>
               <div
-                className={`relative flex flex-col rounded-3xl border p-8 transition-all duration-300 hover:-translate-y-1 ${
-                  tier.highlight
-                    ? 'border-cyan-400 dark:border-cyan-500/50 bg-white dark:bg-slate-900/60 shadow-xl dark:shadow-cyan-500/10 lg:-translate-y-4 hover:lg:-translate-y-5'
-                    : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40 hover:border-cyan-300 dark:hover:border-cyan-500/40'
-                }`}
+                className={cn(
+                  'relative flex h-full flex-col border p-8',
+                  tier.highlight ? 'border-accent bg-surface lg:-translate-y-4' : 'border-line bg-surface',
+                )}
               >
                 {tier.highlight && (
-                  <span className="cta-glow absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 px-4 py-1 text-[11px] font-bold uppercase tracking-widest text-white shadow-lg">
+                  <span className="absolute -top-3 left-1/2 inline-flex -translate-x-1/2 items-center gap-1 border border-ink bg-accent px-4 py-1 font-mono text-[11px] font-bold uppercase tracking-widest text-accent-ink">
                     <Sparkles className="h-3 w-3" /> Most popular
                   </span>
                 )}
-                <h2 className="text-lg font-black text-slate-900 dark:text-white">{tier.name}</h2>
+                <h2 className="font-display text-lg font-semibold text-ink">{tier.name}</h2>
                 <div className="mt-3 flex items-baseline gap-2">
-                  <span className="text-4xl font-black text-slate-900 dark:text-white">{tier.price}</span>
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-500">{tier.suffix}</span>
+                  <span className="font-display text-4xl font-semibold text-ink">{tier.price}</span>
+                  <span className="font-mono text-xs font-bold uppercase tracking-wider text-ink-secondary">{tier.suffix}</span>
                 </div>
-                <p className="mt-3 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{tier.desc}</p>
-                <ul className="mt-6 space-y-3 flex-1">
+                <p className="mt-3 text-sm leading-relaxed text-ink-secondary">{tier.desc}</p>
+                <ul className="mt-6 flex-1 space-y-3">
                   {tier.features.map((f) => (
-                    <li key={f} className="flex gap-2 text-sm text-slate-700 dark:text-slate-300">
-                      <CheckCircle2 className="h-4 w-4 text-cyan-600 dark:text-cyan-400 shrink-0 mt-0.5" /> {f}
+                    <li key={f} className="flex gap-2 text-sm text-ink">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent" /> {f}
                     </li>
                   ))}
                 </ul>
-                <Link
-                  href="/contact"
-                  className={`mt-8 inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-black transition-all ${
-                    tier.highlight
-                      ? 'bg-gradient-to-r from-cyan-500 to-blue-600 dark:from-cyan-400 dark:to-blue-500 text-white dark:text-black shadow-lg shadow-cyan-500/20 hover:scale-[1.02]'
-                      : 'border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-800/80'
-                  }`}
-                >
+                <Button href="/contact" variant={tier.highlight ? 'primary' : 'secondary'} className="mt-8">
                   Get a Free Quote <ArrowRight className="h-4 w-4" />
-                </Link>
+                </Button>
               </div>
             </Reveal>
           ))}
         </div>
 
         {/* FAQ */}
-        <div className="mt-24 max-w-3xl mx-auto">
+        <div className="mx-auto mt-24 max-w-3xl">
           <Reveal>
-            <h2 className="text-center text-2xl font-black text-slate-900 dark:text-white sm:text-3xl transition-colors duration-300">
+            <h2 className="text-center font-display text-2xl font-semibold text-ink sm:text-3xl">
               Pricing questions, answered.
             </h2>
           </Reveal>
           <div className="mt-10 space-y-4">
             {faqs.map((item, idx) => (
               <Reveal key={item.q} delay={idx * 0.05}>
-                <details className="group rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40 p-6 transition-colors duration-300 open:border-cyan-300 dark:open:border-cyan-500/40">
-                  <summary className="cursor-pointer list-none font-bold text-slate-900 dark:text-white flex items-center justify-between gap-4">
+                <details className="group border border-line bg-surface p-6 open:border-accent">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display font-semibold text-ink">
                     {item.q}
-                    <span className="shrink-0 text-cyan-600 dark:text-cyan-400 transition-transform group-open:rotate-45">+</span>
+                    <span className="shrink-0 font-mono text-accent transition-transform group-open:rotate-45">+</span>
                   </summary>
-                  <p className="mt-3 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{item.a}</p>
+                  <p className="mt-3 text-sm leading-relaxed text-ink-secondary">{item.a}</p>
                 </details>
               </Reveal>
             ))}

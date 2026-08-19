@@ -4,6 +4,8 @@ import { ArrowRight, Calendar, Clock } from 'lucide-react';
 import { sql } from '@/lib/db';
 import { estimateReadingTime } from '@/lib/content';
 import Reveal from '@/components/ui/Reveal';
+import Eyebrow from '@/components/ui/Eyebrow';
+import Tag from '@/components/ui/Tag';
 import BlogGrid from '@/components/blog/BlogGrid';
 import NewsletterForm from '@/components/ui/NewsletterForm';
 
@@ -49,24 +51,22 @@ export default async function BlogPage() {
   const [featured, ...rest] = posts;
 
   return (
-    <div className="px-6 py-20 md:py-28 bg-slate-50 dark:bg-[#07080c] transition-colors duration-300">
+    <div className="bg-paper px-6 py-20 transition-colors duration-300 md:py-28">
       <div className="mx-auto max-w-6xl">
         <Reveal className="max-w-2xl">
-          <p className="text-xs font-bold uppercase tracking-widest text-cyan-600 dark:text-cyan-400">Blog</p>
-          <h1 className="mt-3 text-4xl font-black text-slate-900 dark:text-white sm:text-5xl">
-            Notes from the team.
-          </h1>
-          <p className="mt-4 text-slate-600 dark:text-slate-400 leading-relaxed">
+          <Eyebrow>Blog</Eyebrow>
+          <h1 className="mt-3 font-display text-4xl font-semibold text-ink sm:text-5xl">Notes from the team.</h1>
+          <p className="mt-4 leading-relaxed text-ink-secondary">
             Thoughts on web development, AI automation, and building software that holds up in
             production — from the 24xDev team in Sheffield.
           </p>
         </Reveal>
 
         {posts.length === 0 ? (
-          <div className="mt-14 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40 p-12 text-center transition-colors duration-300">
-            <p className="text-slate-600 dark:text-slate-400">
+          <div className="mt-14 border border-line bg-surface p-12 text-center">
+            <p className="text-ink-secondary">
               Nothing published yet — check back soon, or{' '}
-              <Link href="/contact" className="font-semibold text-cyan-600 dark:text-cyan-400 hover:underline">
+              <Link href="/contact" className="font-semibold text-accent hover:underline">
                 get in touch
               </Link>{' '}
               in the meantime.
@@ -78,9 +78,9 @@ export default async function BlogPage() {
               <Reveal delay={0.05} className="mt-14">
                 <Link
                   href={`/blog/${featured.slug}`}
-                  className="group grid overflow-hidden rounded-3xl border border-slate-200 bg-white transition-all duration-300 hover:border-cyan-300 dark:border-slate-800 dark:bg-slate-900/40 dark:hover:border-cyan-500/40 shadow-sm hover:shadow-xl dark:hover:shadow-cyan-500/10 md:grid-cols-2"
+                  className="group grid overflow-hidden border border-line bg-surface transition-colors duration-200 hover:border-accent md:grid-cols-2"
                 >
-                  <div className="relative h-64 w-full overflow-hidden bg-gradient-to-br from-slate-800 via-slate-900 to-black md:h-full">
+                  <div className="relative h-64 w-full overflow-hidden border-b border-line bg-surface-alt md:h-full md:border-b-0 md:border-r">
                     {featured.cover_image ? (
                       <img
                         src={featured.cover_image}
@@ -90,17 +90,15 @@ export default async function BlogPage() {
                       />
                     ) : (
                       <div className="flex h-full w-full items-center justify-center">
-                        <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-600 font-mono text-2xl font-black text-black">
+                        <span className="flex h-16 w-16 items-center justify-center border-2 border-ink font-mono text-2xl font-black text-ink">
                           24
                         </span>
                       </div>
                     )}
                   </div>
                   <div className="flex flex-col justify-center p-8 md:p-10">
-                    <span className="w-fit rounded-full bg-cyan-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-cyan-700 dark:bg-cyan-500/10 dark:text-cyan-400">
-                      Latest
-                    </span>
-                    <div className="mt-4 flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-500">
+                    <Tag tone="accent" className="w-fit">Latest</Tag>
+                    <div className="mt-4 flex flex-wrap items-center gap-3 font-mono text-xs font-bold uppercase tracking-wider text-ink-secondary">
                       <span className="flex items-center gap-1.5">
                         <Calendar className="h-3.5 w-3.5" />
                         {new Date(featured.published_at).toLocaleDateString('en-GB', {
@@ -114,11 +112,11 @@ export default async function BlogPage() {
                         {featured.readingTime} min read
                       </span>
                     </div>
-                    <h2 className="mt-3 text-2xl font-black text-slate-900 dark:text-white sm:text-3xl group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
+                    <h2 className="mt-3 font-display text-2xl font-semibold text-ink group-hover:text-accent sm:text-3xl">
                       {featured.title}
                     </h2>
-                    <p className="mt-4 text-slate-600 dark:text-slate-400 leading-relaxed">{featured.excerpt}</p>
-                    <span className="mt-6 flex items-center gap-2 text-sm font-bold text-cyan-600 dark:text-cyan-400">
+                    <p className="mt-4 leading-relaxed text-ink-secondary">{featured.excerpt}</p>
+                    <span className="mt-6 flex items-center gap-2 font-mono text-sm font-bold text-accent">
                       Read the full post{' '}
                       <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </span>
@@ -133,13 +131,10 @@ export default async function BlogPage() {
               </Reveal>
             )}
 
-            <Reveal
-              delay={0.15}
-              className="mt-20 overflow-hidden rounded-3xl border border-slate-800 bg-gradient-to-br from-slate-900 to-black p-8 text-center md:p-12"
-            >
-              <p className="text-xs font-bold uppercase tracking-widest text-cyan-400">Stay in the loop</p>
-              <h2 className="mt-2 text-2xl font-black text-white">Get new posts by email.</h2>
-              <p className="mx-auto mt-3 max-w-md text-sm text-slate-400">
+            <Reveal delay={0.15} className="mt-20 border border-line bg-surface p-8 text-center md:p-12">
+              <Eyebrow className="text-center">Stay in the loop</Eyebrow>
+              <h2 className="mt-2 font-display text-2xl font-semibold text-ink">Get new posts by email.</h2>
+              <p className="mx-auto mt-3 max-w-md text-sm text-ink-secondary">
                 Occasional notes on new projects, engineering write-ups and what we&apos;re building. No spam.
               </p>
               <div className="mx-auto mt-6 max-w-sm">

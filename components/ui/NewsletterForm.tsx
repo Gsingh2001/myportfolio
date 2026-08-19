@@ -14,7 +14,7 @@ function SubmitButton() {
       type="submit"
       disabled={pending}
       aria-label="Subscribe"
-      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-cyan-400 text-black transition-transform hover:scale-105 disabled:opacity-60 disabled:hover:scale-100"
+      className="stamp-shadow flex h-11 w-11 shrink-0 items-center justify-center rounded bg-accent text-accent-ink transition-colors hover:bg-accent-hover disabled:opacity-60"
     >
       {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Mail className="h-4 w-4" />}
     </button>
@@ -26,7 +26,7 @@ export default function NewsletterForm() {
 
   if (state.status === 'success') {
     return (
-      <p className="flex items-center gap-2 text-sm font-semibold text-cyan-400">
+      <p className="flex items-center gap-2 text-sm font-semibold text-accent">
         <CheckCircle2 className="h-4 w-4" /> {state.message}
       </p>
     );
@@ -45,11 +45,11 @@ export default function NewsletterForm() {
           name="email"
           required
           placeholder="you@company.co.uk"
-          className="w-full min-w-0 rounded-lg border border-slate-800 bg-slate-900/60 px-3 py-2.5 text-sm text-white placeholder:text-slate-500 outline-none transition-colors focus:border-cyan-500"
+          className="w-full min-w-0 rounded border border-line bg-surface px-3 py-2.5 text-sm text-ink placeholder:text-ink-secondary outline-none transition-colors focus:border-accent"
         />
         <SubmitButton />
       </div>
-      {state.status === 'error' && <p className="text-xs text-red-400">{state.message}</p>}
+      {state.status === 'error' && <p className="text-xs text-accent">{state.message}</p>}
     </form>
   );
 }

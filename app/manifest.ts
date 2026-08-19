@@ -8,8 +8,8 @@ export default function manifest(): MetadataRoute.Manifest {
       'Sheffield-based software studio building high-performance websites, AI automation and custom dashboards for UK businesses.',
     start_url: '/',
     display: 'standalone',
-    background_color: '#07080c',
-    theme_color: '#07080c',
+    background_color: '#f6f3ec',
+    theme_color: '#e8501a',
     icons: [
       {
         src: '/logo/android-chrome-192x192.png',

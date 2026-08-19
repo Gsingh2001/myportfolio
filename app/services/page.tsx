@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import type { Metadata } from 'next';
 import {
   Code2,
@@ -13,6 +12,10 @@ import {
   Workflow,
 } from 'lucide-react';
 import Reveal from '@/components/ui/Reveal';
+import Eyebrow from '@/components/ui/Eyebrow';
+import SectionIndex from '@/components/ui/SectionIndex';
+import Panel from '@/components/ui/Panel';
+import Button from '@/components/ui/Button';
 
 export const metadata: Metadata = {
   title: 'Web Development & AI Services | Sheffield & UK-Wide',
@@ -68,14 +71,14 @@ const process = [
 
 export default function ServicesPage() {
   return (
-    <div className="px-6 py-20 md:py-28 bg-slate-50 dark:bg-[#07080c] transition-colors duration-300">
+    <div className="bg-paper px-6 py-20 transition-colors duration-300 md:py-28">
       <div className="mx-auto max-w-7xl">
-        <Reveal className="text-center max-w-2xl mx-auto">
-          <p className="text-xs font-bold uppercase tracking-widest text-cyan-600 dark:text-cyan-400">Core Services</p>
-          <h1 className="mt-3 text-4xl font-black text-slate-900 dark:text-white sm:text-5xl transition-colors duration-300">
+        <Reveal className="mx-auto max-w-2xl text-center">
+          <Eyebrow className="text-center">Core Services</Eyebrow>
+          <h1 className="mt-3 font-display text-4xl font-semibold text-ink sm:text-5xl">
             Engineered for speed &amp; scale.
           </h1>
-          <p className="mt-4 text-slate-600 dark:text-slate-400 transition-colors duration-300">
+          <p className="mt-4 text-ink-secondary">
             High-performance architectures, custom AI automation, and dashboards built by a UK-based team who answer
             the phone.
           </p>
@@ -84,57 +87,58 @@ export default function ServicesPage() {
         <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {services.map((svc, idx) => (
             <Reveal key={svc.title} delay={idx * 0.07}>
-              <div className="group rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900/40 p-8 transition-all duration-300 hover:-translate-y-1.5 hover:border-cyan-300 dark:hover:border-cyan-500/40 hover:shadow-xl dark:hover:shadow-cyan-500/5">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100 dark:bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+              <Panel className="h-full">
+                <div className="flex h-12 w-12 items-center justify-center border border-ink text-accent">
                   <svc.icon className="h-6 w-6" />
                 </div>
-                <h3 className="mt-6 text-xl font-bold text-slate-900 dark:text-white">{svc.title}</h3>
-                <p className="mt-3 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">{svc.desc}</p>
+                <h3 className="mt-6 font-display text-xl font-semibold text-ink">{svc.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-ink-secondary">{svc.desc}</p>
                 <ul className="mt-5 space-y-2">
                   {svc.points.map((pt) => (
-                    <li key={pt} className="flex gap-2 text-xs font-medium text-slate-500 dark:text-slate-400">
-                      <CheckCircle2 className="h-4 w-4 text-cyan-600 dark:text-cyan-400 shrink-0 mt-0.5" /> {pt}
+                    <li key={pt} className="flex gap-2 text-xs font-medium text-ink-secondary">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent" /> {pt}
                     </li>
                   ))}
                 </ul>
-              </div>
+              </Panel>
             </Reveal>
           ))}
         </div>
 
         {/* Process strip */}
         <Reveal>
-          <div className="mt-24 rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900/20 p-10 transition-colors duration-300">
-            <div className="grid gap-10 sm:grid-cols-3">
-              {process.map((p, i) => (
-                <div key={p.title} className="flex gap-4">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white dark:bg-slate-800 text-cyan-600 dark:text-cyan-400 font-mono font-black shadow-sm">
-                    {String(i + 1).padStart(2, '0')}
+          <div className="mt-24">
+            <SectionIndex index={5} total={6} label="HOW IT WORKS" />
+            <div className="border border-line bg-surface-alt p-10">
+              <div className="grid gap-10 sm:grid-cols-3">
+                {process.map((p, i) => (
+                  <div key={p.title} className="flex gap-4">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center border border-ink bg-surface font-mono font-black text-ink">
+                      {String(i + 1).padStart(2, '0')}
+                    </div>
+                    <div>
+                      <h4 className="font-display font-semibold text-ink">{p.title}</h4>
+                      <p className="mt-1 text-sm text-ink-secondary">{p.desc}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-bold text-slate-900 dark:text-white">{p.title}</h4>
-                    <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{p.desc}</p>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </Reveal>
 
         {/* CTA */}
         <Reveal delay={0.1}>
-          <div className="mt-20 flex flex-col items-center gap-6 text-center sm:flex-row sm:justify-between sm:text-left rounded-3xl border border-cyan-200 dark:border-cyan-500/30 bg-gradient-to-br from-white to-slate-50 dark:from-[#0a1118] dark:to-[#05090d] p-10 transition-colors duration-300">
+          <div className="mt-20 flex flex-col items-center gap-6 border border-line bg-surface p-10 text-center sm:flex-row sm:justify-between sm:text-left">
             <div>
-              <h2 className="text-2xl font-black text-slate-900 dark:text-white sm:text-3xl">Not sure which service fits?</h2>
-              <p className="mt-2 text-slate-600 dark:text-slate-300">Tell us your goals — we&apos;ll recommend the right scope and a fixed price.</p>
+              <h2 className="font-display text-2xl font-semibold text-ink sm:text-3xl">Not sure which service fits?</h2>
+              <p className="mt-2 text-ink-secondary">Tell us your goals — we&apos;ll recommend the right scope and a fixed price.</p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-3 shrink-0">
-              <Link href="/pricing" className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white/60 dark:bg-slate-900/60 px-6 py-3.5 text-sm font-bold text-slate-800 dark:text-white transition-all hover:bg-slate-50 dark:hover:bg-slate-800/80">
-                View Pricing
-              </Link>
-              <Link href="/contact" className="cta-glow inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 dark:from-cyan-400 dark:to-blue-500 px-6 py-3.5 text-sm font-black text-white dark:text-black shadow-lg shadow-cyan-500/20 transition-all hover:scale-[1.02]">
+            <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
+              <Button href="/pricing" variant="secondary">View Pricing</Button>
+              <Button href="/contact" variant="primary">
                 Get a Free Quote <ArrowRight className="h-4 w-4" />
-              </Link>
+              </Button>
             </div>
           </div>
         </Reveal>

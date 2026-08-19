@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ArrowRight, Calendar } from 'lucide-react';
+import SectionIndex from '@/components/ui/SectionIndex';
 
 type RelatedPost = {
   slug: string;
@@ -14,15 +15,15 @@ export default function RelatedPosts({ posts }: { posts: RelatedPost[] }) {
 
   return (
     <div className="mt-16">
-      <h2 className="text-xl font-black text-slate-900 dark:text-white">Keep reading</h2>
-      <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <SectionIndex index={2} total={2} label="KEEP READING" />
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {posts.map((post) => (
           <Link
             key={post.slug}
             href={`/blog/${post.slug}`}
-            className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900/40 dark:hover:border-cyan-500/40"
+            className="group flex flex-col overflow-hidden rounded border border-line bg-surface transition-colors hover:border-accent"
           >
-            <div className="relative h-32 w-full overflow-hidden bg-gradient-to-br from-slate-800 to-slate-950">
+            <div className="relative h-32 w-full overflow-hidden border-b border-line bg-surface-alt">
               {post.cover_image ? (
                 <img
                   src={post.cover_image}
@@ -31,13 +32,13 @@ export default function RelatedPosts({ posts }: { posts: RelatedPost[] }) {
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               ) : (
-                <div className="flex h-full w-full items-center justify-center text-2xl font-black text-cyan-400/40">
+                <div className="flex h-full w-full items-center justify-center font-mono text-2xl font-black text-ink-secondary/30">
                   24
                 </div>
               )}
             </div>
             <div className="flex flex-1 flex-col p-5">
-              <p className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-500">
+              <p className="flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-wider text-ink-secondary">
                 <Calendar className="h-3 w-3" />
                 {new Date(post.published_at).toLocaleDateString('en-GB', {
                   day: 'numeric',
@@ -45,13 +46,11 @@ export default function RelatedPosts({ posts }: { posts: RelatedPost[] }) {
                   year: 'numeric',
                 })}
               </p>
-              <h3 className="mt-2 text-sm font-black text-slate-900 group-hover:text-cyan-600 dark:text-white dark:group-hover:text-cyan-400">
+              <h3 className="mt-2 font-display text-sm font-semibold text-ink group-hover:text-accent">
                 {post.title}
               </h3>
-              <p className="mt-2 flex-1 text-xs leading-relaxed text-slate-600 line-clamp-2 dark:text-slate-400">
-                {post.excerpt}
-              </p>
-              <span className="mt-3 flex items-center gap-1 text-xs font-bold text-cyan-600 dark:text-cyan-400">
+              <p className="mt-2 flex-1 text-xs leading-relaxed text-ink-secondary line-clamp-2">{post.excerpt}</p>
+              <span className="mt-3 flex items-center gap-1 font-mono text-xs font-bold text-accent">
                 Read <ArrowRight className="h-3 w-3" />
               </span>
             </div>

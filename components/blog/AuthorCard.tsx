@@ -1,12 +1,12 @@
 export default function AuthorCard() {
   return (
-    <div className="flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/40">
-      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 text-lg font-black text-black">
+    <div className="flex items-center gap-4 rounded border border-line bg-surface p-5">
+      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 border-ink font-mono text-lg font-black text-ink">
         GS
       </div>
       <div>
-        <p className="font-bold text-slate-900 dark:text-white">Gurmanpreet Singh</p>
-        <p className="text-sm text-slate-500 dark:text-slate-400">Director &amp; Principal Architect, 24xDev</p>
+        <p className="font-display font-semibold text-ink">Gurmanpreet Singh</p>
+        <p className="text-sm text-ink-secondary">Director &amp; Principal Architect, 24xDev</p>
       </div>
     </div>
   );

@@ -1,7 +1,8 @@
-import Link from 'next/link';
 import type { Metadata } from 'next';
-import { Code2, Database, Zap, Layers, Terminal, Sparkles, Cloud, Lock, ArrowRight, Cpu } from 'lucide-react';
+import { ArrowRight, Code2, Database, Zap, Layers, Terminal, Sparkles, Cloud, Lock, Cpu } from 'lucide-react';
 import Reveal from '@/components/ui/Reveal';
+import Eyebrow from '@/components/ui/Eyebrow';
+import Button from '@/components/ui/Button';
 
 export const metadata: Metadata = {
   title: 'Our Tech Stack | Next.js, React, Node.js, AI',
@@ -50,14 +51,14 @@ const stackGroups = [
 
 export default function TechPage() {
   return (
-    <div className="px-6 py-20 md:py-28 text-center bg-slate-50 dark:bg-[#07080c] transition-colors duration-300">
+    <div className="bg-paper px-6 py-20 text-center transition-colors duration-300 md:py-28">
       <div className="mx-auto max-w-5xl">
         <Reveal>
-          <p className="text-xs font-bold uppercase tracking-widest text-cyan-600 dark:text-cyan-400">Our Toolkit</p>
-          <h1 className="mt-3 text-4xl font-black text-slate-900 dark:text-white sm:text-5xl transition-colors duration-300">
+          <Eyebrow className="text-center">Our Toolkit</Eyebrow>
+          <h1 className="mt-3 font-display text-4xl font-semibold text-ink sm:text-5xl">
             Industry-leading technologies.
           </h1>
-          <p className="mt-4 max-w-2xl mx-auto text-slate-600 dark:text-slate-400 transition-colors duration-300">
+          <p className="mx-auto mt-4 max-w-2xl text-ink-secondary">
             No bloated page builders or outdated frameworks. We build exclusively with modern, actively-maintained
             tools chosen for speed, security and long-term maintainability.
           </p>
@@ -66,17 +67,17 @@ export default function TechPage() {
         <div className="mt-16 space-y-14 text-left">
           {stackGroups.map((group, groupIdx) => (
             <Reveal key={group.label} delay={groupIdx * 0.05}>
-              <h2 className="text-sm font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-5">
+              <h2 className="mb-5 font-mono text-sm font-bold uppercase tracking-widest text-ink-secondary">
                 {group.label}
               </h2>
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
                 {group.items.map((t) => (
                   <div
                     key={t.name}
-                    className="group flex flex-col items-center justify-center gap-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/30 p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300 dark:hover:border-cyan-500/40 hover:shadow-lg dark:hover:shadow-cyan-500/5"
+                    className="flex flex-col items-center justify-center gap-3 border border-line bg-surface p-6 text-center transition-colors duration-200 hover:border-accent"
                   >
-                    <t.icon className="h-7 w-7 text-cyan-600 dark:text-cyan-400 transition-transform duration-300 group-hover:scale-125" />
-                    <span className="text-sm font-bold text-slate-900 dark:text-white">{t.name}</span>
+                    <t.icon className="h-7 w-7 text-accent" />
+                    <span className="text-sm font-bold text-ink">{t.name}</span>
                   </div>
                 ))}
               </div>
@@ -85,17 +86,14 @@ export default function TechPage() {
         </div>
 
         <Reveal delay={0.1}>
-          <div className="mt-20 rounded-3xl border border-cyan-200 dark:border-cyan-500/30 bg-gradient-to-br from-white to-slate-50 dark:from-[#0a1118] dark:to-[#05090d] p-10 transition-colors duration-300">
-            <h2 className="text-2xl font-black text-slate-900 dark:text-white sm:text-3xl">Want the details behind the stack?</h2>
-            <p className="mt-3 text-slate-600 dark:text-slate-300 max-w-xl mx-auto">
+          <div className="mt-20 border border-line bg-surface p-10">
+            <h2 className="font-display text-2xl font-semibold text-ink sm:text-3xl">Want the details behind the stack?</h2>
+            <p className="mx-auto mt-3 max-w-xl text-ink-secondary">
               We&apos;ll walk you through exactly how we&apos;d architect your project on a free discovery call.
             </p>
-            <Link
-              href="/contact"
-              className="cta-glow mt-8 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 dark:from-cyan-400 dark:to-blue-500 px-8 py-4 text-sm font-black text-white dark:text-black shadow-lg shadow-cyan-500/20 transition-all hover:scale-[1.02]"
-            >
+            <Button href="/contact" variant="primary" size="lg" className="mt-8">
               Book a Free Call <ArrowRight className="h-4 w-4" />
-            </Link>
+            </Button>
           </div>
         </Reveal>
       </div>

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, JetBrains_Mono } from 'next/font/google';
+import { Fraunces, Public_Sans, JetBrains_Mono } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
@@ -9,12 +9,19 @@ import BackgroundGlow from '@/components/ui/BackgroundGlow';
 import ScrollProgress from '@/components/ui/ScrollProgress';
 import FloatingCTA from '@/components/ui/FloatingCTA';
 import CookieConsent from '@/components/ui/CookieConsent';
+import ChatWidget from '@/components/ui/ChatWidget';
 import OrganizationSchema from '@/components/seo/OrganizationSchema';
 import { ThemeProvider } from '@/components/ThemeProvider';
 // ThemeToggle is not imported here because it is rendered inside Navbar instead
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
-const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-jetbrains-mono' });
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-fraunces',
+  axes: ['opsz'],
+  display: 'swap',
+});
+const publicSans = Public_Sans({ subsets: ['latin'], variable: '--font-public-sans', display: 'swap' });
+const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-jetbrains-mono', display: 'swap' });
 
 const siteUrl = 'https://24xdev.co.uk';
 
@@ -81,8 +88,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   colorScheme: 'light dark',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#07080c' },
+    { media: '(prefers-color-scheme: light)', color: '#f6f3ec' },
+    { media: '(prefers-color-scheme: dark)', color: '#15130f' },
   ],
 };
 
@@ -90,7 +97,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en-GB" className="scroll-smooth" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${mono.variable} font-sans bg-slate-50 text-slate-900 dark:bg-[#07080c] dark:text-slate-100 antialiased selection:bg-cyan-500 selection:text-black min-h-screen flex flex-col transition-colors duration-300`}
+        className={`${fraunces.variable} ${publicSans.variable} ${mono.variable} font-sans bg-paper text-ink antialiased min-h-screen flex flex-col transition-colors duration-300`}
       >
         <OrganizationSchema />
         <ThemeProvider>
@@ -103,6 +110,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
           <Footer />
           <FloatingCTA />
+          <ChatWidget />
           <CookieConsent />
         </ThemeProvider>
         <Analytics />
