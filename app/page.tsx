@@ -156,7 +156,7 @@ export default function UltimateLandingPage() {
       {/* =========================================
           1. HERO SECTION
           ========================================= */}
-      <section className="relative flex min-h-[85vh] flex-col justify-center px-6 pt-28 md:pt-40 lg:pt-48">
+      <section className="relative flex min-h-[85vh] flex-col justify-center px-6 pt-10 md:pt-10 lg:pt-10">
         <div className="relative mx-auto max-w-5xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
