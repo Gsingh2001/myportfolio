@@ -1,26 +1,34 @@
 'use client';
 
-import { useEffect, useState, type FormEvent } from 'react';
-import { useForm, ValidationError } from '@formspree/react';
-import { CheckCircle2, Loader2, Send, Sparkles } from 'lucide-react';
+import { useActionState, useEffect, useRef, useState } from 'react';
+import { AlertCircle, CheckCircle2, Loader2, Send } from 'lucide-react';
+import { submitQuoteRequest, type QuoteFormState } from '@/app/contact/actions';
 
 const inputClass =
   'w-full rounded-2xl border border-line bg-surface px-4 py-3 text-sm text-ink placeholder:text-ink-secondary outline-none transition-colors focus:border-accent';
 
 const labelClass = 'mb-2 block text-xs font-medium text-ink-secondary';
 
-const fieldErrorClass = 'mt-1.5 text-xs text-accent';
-
-// Public Formspree hash. Env wins when the Vercel integration sets it;
-// the fallback keeps prerender from throwing when that variable is absent.
-const quoteFormId = process.env.NEXT_PUBLIC_QUOTE_FORM?.trim() || 'xkjwporb';
+const initialState: QuoteFormState = { status: 'idle', message: '' };
 
 export default function QuoteForm() {
-  const [state, handleSubmit] = useForm(quoteFormId);
-  const [analyzing, setAnalyzing] = useState(false);
+  const [attempt, setAttempt] = useState(0);
+
+  return <QuoteFormFields key={attempt} onSendAnother={() => setAttempt((value) => value + 1)} />;
+}
+
+function QuoteFormFields({ onSendAnother }: { onSendAnother: () => void }) {
+  const [state, formAction, pending] = useActionState(submitQuoteRequest, initialState);
+  const statusRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!state.succeeded) return;
+    if (state.status === 'idle') return;
+    statusRef.current?.focus();
+    statusRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, [state.status, state.message]);
+
+  useEffect(() => {
+    if (state.status !== 'success') return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     let cancelled = false;
     import('canvas-confetti').then(({ default: confetti }) => {
@@ -35,95 +43,70 @@ export default function QuoteForm() {
     return () => {
       cancelled = true;
     };
-  }, [state.succeeded]);
+  }, [state.status]);
 
-  // Best-effort Gemini pre-analysis: before the real Formspree submission
-  // goes out, we ask /api/quote-analysis to draft a short internal triage
-  // note (suggested tier, scope, clarifying questions) and drop it into the
-  // hidden `aiDraftAnalysis` field below, so it rides along in the same
-  // notification email the team already gets. If Gemini isn't configured,
-  // times out, or errors, we simply skip it and submit the form as normal —
-  // this must never block or slow down a real quote request meaningfully.
-  async function onSubmit(e: FormEvent<HTMLFormElement>) {
-    const form = e.currentTarget;
-    setAnalyzing(true);
-    try {
-      const formData = new FormData(form);
-      const res = await fetch('/api/quote-analysis', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          projectType: String(formData.get('projectType') ?? ''),
-          stage: String(formData.get('stage') ?? ''),
-          timeline: String(formData.get('timeline') ?? ''),
-          message: String(formData.get('message') ?? ''),
-        }),
-        signal: AbortSignal.timeout(8000),
-      });
-      if (res.ok) {
-        const data = await res.json().catch(() => null);
-        if (data?.draft) {
-          const hidden = form.elements.namedItem('aiDraftAnalysis') as HTMLInputElement | null;
-          if (hidden) hidden.value = data.draft;
-        }
-      }
-    } catch {
-      // Gemini unavailable, rate-limited, or slow — fine, submit without it.
-    } finally {
-      setAnalyzing(false);
-    }
-
-    handleSubmit(e);
-  }
-
-  if (state.succeeded) {
+  if (state.status === 'success') {
     return (
-      <div className="rounded border border-line bg-surface-alt p-8 text-center">
-        <CheckCircle2 className="mx-auto h-10 w-10 text-accent" />
-        <h3 className="mt-4 font-display text-lg font-semibold text-ink">Request received</h3>
-        <p className="mt-2 text-sm text-ink-secondary">
-          Thanks — we&apos;ve received your request and will reply within 1 business day.
-        </p>
+      <div
+        ref={statusRef}
+        tabIndex={-1}
+        role="status"
+        className="rounded-3xl border border-line bg-surface-alt px-8 py-10 text-center outline-none"
+      >
+        <CheckCircle2 className="mx-auto h-10 w-10 text-accent" aria-hidden="true" />
+        <h3 className="mt-4 font-display text-2xl font-semibold text-ink">Request received</h3>
+        <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-ink-secondary">{state.message}</p>
+        <button
+          type="button"
+          onClick={onSendAnother}
+          className="mt-6 text-sm font-medium text-accent underline-offset-4 hover:underline"
+        >
+          Send another request
+        </button>
       </div>
     );
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-5">
-      {/* Formspree honeypot — hidden from real users. Bots tend to fill every
-          field they can find; Formspree silently discards submissions where
-          this field is non-empty instead of forwarding them to your inbox. */}
+    <form action={formAction} className="space-y-5">
       <div className="hidden" aria-hidden="true">
         <label htmlFor="_gotcha">Website</label>
         <input type="text" id="_gotcha" name="_gotcha" tabIndex={-1} autoComplete="off" />
       </div>
-      <input type="hidden" name="_subject" value="New quote request — 24xDev" />
-      {/* Populated client-side (if Gemini is configured) right before submit
-          with an AI-drafted scope/estimate note, so it lands in the same
-          notification email as the raw submission. */}
-      <input type="hidden" name="aiDraftAnalysis" defaultValue="" />
+
+      {state.status === 'error' ? (
+        <div
+          ref={statusRef}
+          tabIndex={-1}
+          role="alert"
+          className="flex items-start gap-3 rounded-2xl border border-accent bg-surface-alt px-4 py-3 text-sm text-ink outline-none"
+        >
+          <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
+          <p>
+            <span className="font-medium">Not sent.</span> {state.message}
+          </p>
+        </div>
+      ) : null}
 
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="name" className={labelClass}>Full name *</label>
-          <input id="name" name="name" required className={inputClass} placeholder="Jordan Smith" />
-          <ValidationError prefix="Name" field="name" errors={state.errors} className={fieldErrorClass} />
+          <input id="name" name="name" required autoComplete="name" className={inputClass} placeholder="Jordan Smith" />
         </div>
         <div>
           <label htmlFor="email" className={labelClass}>Email *</label>
-          <input id="email" name="email" type="email" required className={inputClass} placeholder="jordan@company.co.uk" />
-          <ValidationError prefix="Email" field="email" errors={state.errors} className={fieldErrorClass} />
+          <input id="email" name="email" type="email" required autoComplete="email" className={inputClass} placeholder="jordan@company.co.uk" />
         </div>
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="phone" className={labelClass}>Phone (optional)</label>
-          <input id="phone" name="phone" type="tel" className={inputClass} placeholder="07123 456789" />
+          <input id="phone" name="phone" type="tel" autoComplete="tel" className={inputClass} placeholder="07123 456789" />
         </div>
         <div>
           <label htmlFor="companyName" className={labelClass}>Company (optional)</label>
-          <input id="companyName" name="companyName" className={inputClass} placeholder="Acme Ltd" />
+          <input id="companyName" name="companyName" autoComplete="organization" className={inputClass} placeholder="Acme Ltd" />
         </div>
       </div>
 
@@ -131,7 +114,7 @@ export default function QuoteForm() {
         <div>
           <label htmlFor="projectType" className={labelClass}>Project type</label>
           <select id="projectType" name="projectType" defaultValue="" className={inputClass}>
-            <option value="" disabled>Select one</option>
+            <option value="">Select one</option>
             <option>New website</option>
             <option>Web application</option>
             <option>E-commerce store</option>
@@ -144,7 +127,7 @@ export default function QuoteForm() {
         <div>
           <label htmlFor="stage" className={labelClass}>Where are you?</label>
           <select id="stage" name="stage" defaultValue="" className={inputClass}>
-            <option value="" disabled>Select one</option>
+            <option value="">Select one</option>
             <option>Exploring the idea</option>
             <option>Ready to brief a team</option>
             <option>Replacing an existing site</option>
@@ -154,7 +137,7 @@ export default function QuoteForm() {
         <div>
           <label htmlFor="timeline" className={labelClass}>Timeline</label>
           <select id="timeline" name="timeline" defaultValue="" className={inputClass}>
-            <option value="" disabled>Select one</option>
+            <option value="">Select one</option>
             <option>ASAP</option>
             <option>Within 1 month</option>
             <option>1–3 months</option>
@@ -173,36 +156,16 @@ export default function QuoteForm() {
           className={inputClass}
           placeholder="What are you trying to build, and what problem should it solve?"
         />
-        <ValidationError prefix="Message" field="message" errors={state.errors} className={fieldErrorClass} />
       </div>
 
-      {/* Form-level errors (e.g. rate limiting, misconfiguration) — renders
-          nothing when there are none, so no empty box appears. */}
-      <ValidationError
-        errors={state.errors}
-        className="flex items-start gap-2 rounded border border-accent bg-surface-alt px-4 py-3 text-sm text-accent"
-      />
-
       <div className="flex flex-col items-start gap-3 pt-2 sm:flex-row sm:items-center sm:justify-between">
-        <p className="flex items-center gap-1.5 text-xs text-ink-secondary">
-          {analyzing ? (
-            <>
-              <Sparkles className="h-3.5 w-3.5 animate-pulse text-accent" /> Reviewing your project with AI...
-            </>
-          ) : (
-            'We reply within 1 business day. No spam, ever.'
-          )}
-        </p>
+        <p className="text-xs text-ink-secondary">We reply within 1 business day. No spam, ever.</p>
         <button
           type="submit"
-          disabled={state.submitting || analyzing}
+          disabled={pending}
           className="stamp-shadow inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-8 py-4 text-sm font-medium text-paper transition-colors hover:bg-accent hover:text-accent-ink disabled:opacity-70 sm:w-auto"
         >
-          {analyzing ? (
-            <>
-              <Loader2 className="h-4 w-4 animate-spin" /> Analyzing...
-            </>
-          ) : state.submitting ? (
+          {pending ? (
             <>
               <Loader2 className="h-4 w-4 animate-spin" /> Sending...
             </>
