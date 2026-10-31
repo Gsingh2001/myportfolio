@@ -10,9 +10,9 @@ import BlogGrid from '@/components/blog/BlogGrid';
 import NewsletterForm from '@/components/ui/NewsletterForm';
 
 export const metadata: Metadata = {
-  title: 'Blog | 24xDev',
+  title: 'Blog | Notes on Web, AI & Software',
   description:
-    'Notes on web development, AI automation and building software for UK businesses — from the 24xDev team in Sheffield.',
+    'Notes on web development, AI automation and building software for UK businesses — from the 24xDev team in London.',
   alternates: { canonical: '/blog' },
 };
 
@@ -51,14 +51,14 @@ export default async function BlogPage() {
   const [featured, ...rest] = posts;
 
   return (
-    <div className="bg-paper px-6 py-20 transition-colors duration-300 md:py-28">
+    <div className="bg-transparent px-6 py-20 transition-colors duration-300 md:py-28">
       <div className="mx-auto max-w-6xl">
         <Reveal className="max-w-2xl">
           <Eyebrow>Blog</Eyebrow>
           <h1 className="mt-3 font-display text-4xl font-semibold text-ink sm:text-5xl">Notes from the team.</h1>
           <p className="mt-4 leading-relaxed text-ink-secondary">
             Thoughts on web development, AI automation, and building software that holds up in
-            production — from the 24xDev team in Sheffield.
+            production — from the 24xDev team in London.
           </p>
         </Reveal>
 

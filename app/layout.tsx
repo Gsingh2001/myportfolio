@@ -7,8 +7,8 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import BackgroundGlow from '@/components/ui/BackgroundGlow';
 import ScrollProgress from '@/components/ui/ScrollProgress';
-import FloatingCTA from '@/components/ui/FloatingCTA';
 import CookieConsent from '@/components/ui/CookieConsent';
+import SmoothScroll from '@/components/motion/SmoothScroll';
 import ChatWidget from '@/components/ui/ChatWidget';
 import OrganizationSchema from '@/components/seo/OrganizationSchema';
 import { ThemeProvider } from '@/components/ThemeProvider';
@@ -25,9 +25,9 @@ const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-jetbrains-mo
 
 const siteUrl = 'https://24xdev.co.uk';
 
-const defaultTitle = '24xDev | Web Development & AI Agency — Sheffield & UK-Wide';
+const defaultTitle = '24xDev | Websites, AI & Software for Clients Worldwide';
 const defaultDescription =
-  'Sheffield-based software studio serving clients across London, Birmingham, Manchester, Leeds and the rest of the UK. High-performance websites, AI automation & dashboards — free quotes.';
+  'London studio building websites, AI automation and custom software for clients worldwide. Projects delivered in many languages. Book a meeting or start with a free quote.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -37,16 +37,14 @@ export const metadata: Metadata = {
   },
   description: defaultDescription,
   keywords: [
-    'web development agency UK',
-    'web design agency Sheffield',
-    'web developers Birmingham',
-    'web development company London',
-    'software developers Manchester',
-    'app development company Leeds',
-    'Next.js developers UK',
-    'AI automation agency UK',
-    'custom software development UK',
-    'bespoke dashboards UK',
+    'web development agency worldwide',
+    'remote software studio',
+    'web design agency London',
+    'Next.js developers',
+    'AI automation agency',
+    'custom software development',
+    'international web development studio',
+    'free website quote',
   ],
   authors: [{ name: '24xDev' }],
   creator: '24xDev',
@@ -95,12 +93,13 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-GB" className="scroll-smooth" suppressHydrationWarning>
+    <html lang="en-GB" suppressHydrationWarning>
       <body
         className={`${fraunces.variable} ${publicSans.variable} ${mono.variable} font-sans bg-paper text-ink antialiased min-h-screen flex flex-col transition-colors duration-300`}
       >
         <OrganizationSchema />
         <ThemeProvider>
+          <SmoothScroll />
           <ScrollProgress />
           <BackgroundGlow />
           <Navbar />
@@ -109,7 +108,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main className="flex-grow relative z-10">{children}</main>
 
           <Footer />
-          <FloatingCTA />
           <ChatWidget />
           <CookieConsent />
         </ThemeProvider>

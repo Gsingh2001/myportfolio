@@ -24,8 +24,8 @@ type ButtonAsLink = BaseProps &
 type ButtonProps = ButtonAsButton | ButtonAsLink;
 
 const variantClasses: Record<ButtonVariant, string> = {
-  primary: 'bg-accent text-accent-ink hover:bg-accent-hover stamp-shadow',
-  secondary: 'border border-ink text-ink hover:bg-ink hover:text-paper stamp-shadow',
+  primary: 'bg-ink text-paper hover:bg-accent hover:text-accent-ink stamp-shadow',
+  secondary: 'border border-line bg-surface text-ink hover:border-ink',
   ghost: 'text-ink hover:text-accent',
 };
 
@@ -36,7 +36,7 @@ const sizeClasses: Record<ButtonSize, string> = {
 };
 
 const base =
-  'inline-flex items-center justify-center gap-2 rounded font-mono font-semibold uppercase tracking-wide transition-colors duration-150';
+  'inline-flex items-center justify-center gap-2 rounded-full font-sans font-medium transition-colors duration-200';
 
 /**
  * Polymorphic button — renders a Next.js `<Link>` when `href` is present,

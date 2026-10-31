@@ -27,7 +27,7 @@ export default function CoverageStrip() {
   return (
     <div className="mt-10">
       <p className="font-mono text-xs font-bold uppercase tracking-widest text-ink-secondary">
-        Sheffield HQ — working remotely with clients across
+        London studio — working remotely with clients across
       </p>
       <div className="mt-4 flex flex-wrap justify-center gap-2">
         {cities.map((city) => (

@@ -9,18 +9,21 @@ const columns = [
   {
     title: 'Company',
     links: [
-      { href: '/about', label: 'Why Us' },
-      { href: '/portfolio', label: 'Portfolio' },
-      { href: '/tech', label: 'Tech Stack' },
+      { href: '/about', label: 'Studio' },
+      { href: '/process', label: 'Process' },
+      { href: '/portfolio', label: 'Work' },
       { href: '/blog', label: 'Blog' },
     ],
   },
   {
     title: 'Work with us',
     links: [
-      { href: '/services', label: 'Services' },
-      { href: '/pricing', label: 'Pricing' },
-      { href: '/contact', label: 'Get a Quote' },
+      { href: '/services/websites', label: 'Websites' },
+      { href: '/services/ai', label: 'AI & automation' },
+      { href: '/services/commerce', label: 'Commerce' },
+      { href: '/services/platforms', label: 'Platforms' },
+      { href: '/contact', label: 'Free quote' },
+      { href: '/contact#book', label: 'Book a meeting' },
     ],
   },
 ];
@@ -47,15 +50,15 @@ export default function Footer() {
               </span>
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-relaxed">
-              A Sheffield, UK based software engineering studio building high-performance websites, AI automation
-              and custom dashboards for ambitious businesses.
+              A London studio working with clients worldwide. Websites, AI and software, delivered
+              in many languages. Every project starts with a free quote or a booked meeting.
             </p>
             <div className="mt-6 space-y-2 text-sm">
               <a href="mailto:contact@24xdev.co.uk" className="flex items-center gap-2 hover:text-accent">
                 <Mail className="h-4 w-4" /> contact@24xdev.co.uk
               </a>
               <p className="flex items-center gap-2">
-                <MapPin className="h-4 w-4" /> Sheffield, South Yorkshire, UK
+                <MapPin className="h-4 w-4" /> London, United Kingdom
               </p>
             </div>
           </div>
@@ -91,7 +94,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-line pt-8 text-xs sm:flex-row">
-          <p>&copy; {new Date().getFullYear()} 24xDev (24xdev.co.uk). Based in Sheffield, UK. Led by Gurmanpreet Singh.</p>
+          <p>&copy; {new Date().getFullYear()} 24xDev (24xdev.co.uk). Based in London, UK. Led by Gurmanpreet Singh.</p>
           <div className="flex items-center gap-5">
             <Link href="/privacy" className="hover:text-accent">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-accent">Terms of Service</Link>

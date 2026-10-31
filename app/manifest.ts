@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: '24xDev — Web Development & AI Agency',
     short_name: '24xDev',
     description:
-      'Sheffield-based software studio building high-performance websites, AI automation and custom dashboards for UK businesses.',
+      'London software studio building websites, AI automation and custom software for clients worldwide, in many languages.',
     start_url: '/',
     display: 'standalone',
     background_color: '#f6f3ec',

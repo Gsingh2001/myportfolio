@@ -26,7 +26,7 @@ export default function Panel({ as: Tag = 'div', interactive, padding = 'md', cl
   return (
     <Tag
       className={cn(
-        'rounded border border-line bg-surface',
+        'rounded-3xl border border-line bg-surface shadow-[0_1px_2px_rgba(18,20,26,0.04)]',
         paddingClasses[padding],
         interactive && 'stamp-shadow',
         className,

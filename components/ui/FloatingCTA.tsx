@@ -48,7 +48,7 @@ export default function FloatingCTA() {
           </button>
           <Link
             href="/contact"
-            className="stamp-shadow flex items-center gap-2 rounded bg-accent px-5 py-3.5 font-mono text-sm font-bold uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-hover"
+            className="stamp-shadow flex items-center gap-2 rounded-full bg-ink px-5 py-3.5 text-sm font-medium text-paper transition-colors hover:bg-accent hover:text-accent-ink"
           >
             <MessageCircle className="h-4 w-4" />
             Get a Free Quote

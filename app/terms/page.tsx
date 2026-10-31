@@ -23,7 +23,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 export default function TermsPage() {
   return (
-    <div className="bg-paper px-6 py-20 transition-colors duration-300 md:py-28">
+    <div className="bg-transparent px-6 py-20 transition-colors duration-300 md:py-28">
       <div className="mx-auto max-w-3xl">
         <Reveal>
           <Eyebrow>Legal</Eyebrow>
@@ -48,7 +48,7 @@ export default function TermsPage() {
 
             <Section title="About 24xDev">
               <p>
-                24xDev is a software engineering studio based in Sheffield, UK, led by Gurmanpreet
+                24xDev is a software engineering studio based in London, UK, led by Gurmanpreet
                 Singh, providing web development, AI automation and custom dashboard services.
               </p>
             </Section>

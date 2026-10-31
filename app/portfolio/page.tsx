@@ -17,7 +17,7 @@ import Button from '@/components/ui/Button';
 export const metadata: Metadata = {
   title: 'Portfolio | Web & AI Projects Across the UK',
   description:
-    'A look at the websites, AI automations and dashboards 24xDev builds for businesses in Sheffield, London, Birmingham and across the UK.',
+    'Websites, AI automations and dashboards built by 24xDev for businesses across the UK. See the kind of work a free quote can start.',
   alternates: { canonical: '/portfolio' },
 };
 
@@ -74,12 +74,12 @@ const projects = [
 
 export default function PortfolioPage() {
   return (
-    <div className="bg-paper px-6 py-20 transition-colors duration-300 md:py-28">
+    <div className="bg-transparent px-6 py-20 transition-colors duration-300 md:py-28">
       <div className="mx-auto max-w-7xl">
         <Reveal className="max-w-2xl">
           <Eyebrow>Our Work</Eyebrow>
-          <h1 className="mt-3 font-display text-4xl font-semibold text-ink sm:text-5xl">
-            Projects built for real businesses.
+          <h1 className="mt-3 font-display text-4xl font-semibold leading-[1.05] text-ink sm:text-6xl">
+            Work with a point of view.
           </h1>
           <p className="mt-4 leading-relaxed text-ink-secondary">
             A snapshot of the kind of work we do — from full website rebuilds to AI automations and internal

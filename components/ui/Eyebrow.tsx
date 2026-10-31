@@ -13,7 +13,7 @@ type EyebrowProps = {
  */
 export default function Eyebrow({ children, as: Tag = 'p', className }: EyebrowProps) {
   return (
-    <Tag className={cn('font-mono text-xs font-bold uppercase tracking-[0.14em] text-accent', className)}>
+    <Tag className={cn('font-sans text-[11px] font-semibold uppercase tracking-[0.22em] text-accent', className)}>
       {children}
     </Tag>
   );

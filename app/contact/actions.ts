@@ -43,7 +43,7 @@ export async function submitQuoteRequest(
   const phone = String(formData.get('phone') || '').trim();
   const company = String(formData.get('companyName') || '').trim();
   const projectType = String(formData.get('projectType') || '').trim();
-  const budget = String(formData.get('budget') || '').trim();
+  const stage = String(formData.get('stage') || formData.get('budget') || '').trim();
   const timeline = String(formData.get('timeline') || '').trim();
   const message = String(formData.get('message') || '').trim();
 
@@ -71,7 +71,7 @@ export async function submitQuoteRequest(
     `Phone: ${phone || '—'}`,
     `Company: ${company || '—'}`,
     `Project type: ${projectType || '—'}`,
-    `Budget: ${budget || '—'}`,
+    `Stage: ${stage || '—'}`,
     `Timeline: ${timeline || '—'}`,
     '',
     'Message:',

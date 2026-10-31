@@ -51,12 +51,12 @@ const stackGroups = [
 
 export default function TechPage() {
   return (
-    <div className="bg-paper px-6 py-20 text-center transition-colors duration-300 md:py-28">
+    <div className="bg-transparent px-6 py-20 text-center transition-colors duration-300 md:py-28">
       <div className="mx-auto max-w-5xl">
         <Reveal>
           <Eyebrow className="text-center">Our Toolkit</Eyebrow>
-          <h1 className="mt-3 font-display text-4xl font-semibold text-ink sm:text-5xl">
-            Industry-leading technologies.
+          <h1 className="mt-3 font-display text-4xl font-semibold leading-[1.05] text-ink sm:text-6xl">
+            The tools we actually ship with.
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-ink-secondary">
             No bloated page builders or outdated frameworks. We build exclusively with modern, actively-maintained
@@ -89,10 +89,10 @@ export default function TechPage() {
           <div className="mt-20 border border-line bg-surface p-10">
             <h2 className="font-display text-2xl font-semibold text-ink sm:text-3xl">Want the details behind the stack?</h2>
             <p className="mx-auto mt-3 max-w-xl text-ink-secondary">
-              We&apos;ll walk you through exactly how we&apos;d architect your project on a free discovery call.
+              Tell us what you&apos;re building and we&apos;ll send a free quote that spells out the approach.
             </p>
             <Button href="/contact" variant="primary" size="lg" className="mt-8">
-              Book a Free Call <ArrowRight className="h-4 w-4" />
+              Get a Free Quote <ArrowRight className="h-4 w-4" />
             </Button>
           </div>
         </Reveal>

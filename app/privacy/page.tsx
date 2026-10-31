@@ -23,7 +23,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 export default function PrivacyPage() {
   return (
-    <div className="bg-paper px-6 py-20 transition-colors duration-300 md:py-28">
+    <div className="bg-transparent px-6 py-20 transition-colors duration-300 md:py-28">
       <div className="mx-auto max-w-3xl">
         <Reveal>
           <Eyebrow>Legal</Eyebrow>
@@ -42,7 +42,7 @@ export default function PrivacyPage() {
           <Panel padding="lg" className="mt-10">
             <Section title="Who we are">
               <p>
-                24xDev is a software engineering studio based in Sheffield, South Yorkshire, United
+                24xDev is a software engineering studio based in London, United
                 Kingdom. For any question about this policy or your data, email{' '}
                 <a href="mailto:contact@24xdev.co.uk" className="font-semibold text-accent hover:underline">
                   contact@24xdev.co.uk

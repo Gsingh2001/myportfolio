@@ -5,7 +5,8 @@ import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import { nanoid } from 'nanoid';
 import ReactMarkdown from 'react-markdown';
-import { MessageCircle, X, Send, Sparkles, Loader2 } from 'lucide-react';
+import Link from 'next/link';
+import { MessageCircle, X, Send, Sparkles, Loader2, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/cn';
 
 type ChatMessage = {
@@ -36,25 +37,25 @@ const TOPICS: Topic[] = [
     id: 'about',
     label: '👋 What do you do?',
     answer:
-      "We're a Sheffield-based web development & AI automation studio — custom Next.js sites, AI/LLM integrations, custom dashboards and e-commerce builds, all on **fixed-scope pricing** with no hourly billing surprises.",
+      "We're a London web and AI studio working with clients **worldwide**. Sites, AI, dashboards and commerce can be delivered in **many languages**. You talk to the engineer, and every project starts with a **free quote**.",
   },
   {
-    id: 'pricing',
-    label: '💰 Pricing',
+    id: 'quote',
+    label: '✉️ Free quote',
     answer:
-      '**Launch** — from £1,500: up to 5 pages, mobile-first, basic SEO.\n\n**Growth** — from £4,500: web app or e-commerce build, CMS, payments, technical SEO.\n\n**Scale** — custom quote: AI integration, custom dashboards, ongoing support.\n\nPrices exclude VAT — every project gets a tailored fixed-scope quote after a free discovery call.',
+      'Tell us what you want to build on the [free quote form](/contact). We reply within **one business day** with a clear scope — no obligation, and we don\'t publish prices on the site. Each quote is written for that project.',
   },
   {
     id: 'timeline',
     label: '⏱️ Timeline & process',
     answer:
-      'Marketing sites usually ship in **1–3 weeks**; web apps, dashboards and AI builds take **3–8 weeks**. Fixed-scope pricing is agreed upfront, you get direct access to the engineer building it, and you own the code and infrastructure — no lock-in.',
+      'Marketing sites usually ship in **1–3 weeks**; web apps, dashboards and AI builds take **3–8 weeks**. You get a written scope before work starts, direct access to the engineer building it, and you own the code — no lock-in.',
   },
   {
     id: 'location',
     label: '📍 Location',
     answer:
-      "We're based in Sheffield, South Yorkshire, and work remotely with clients across London, Birmingham, Manchester, Leeds and the rest of the UK.",
+      "The studio is in **London**. Clients are **worldwide**, and we book calls around your time zone. Use **Book a meeting** on the contact page — the invite goes to contact@24xdev.co.uk.",
   },
 ];
 
@@ -70,9 +71,9 @@ const markdownClass =
   '[&_a]:text-accent [&_a]:underline [&_ul]:list-disc [&_ul]:pl-4 [&_ol]:list-decimal [&_ol]:pl-4 [&_strong]:font-semibold [&>*+*]:mt-2';
 
 /**
- * Floating Gemini-powered chat widget. Bottom-right, stacked above
- * FloatingCTA's "Get a Free Quote" button (also bottom-right, bottom-6) so
- * the two never overlap. Opens into a pre-written quick-reply menu first —
+ * One bottom-right control: AI chat and the free-quote link share a single
+ * pill, so they never compete for the corner. Opens into a pre-written
+ * quick-reply menu first —
  * only once a visitor picks "Ask me anything else" or has opened a couple
  * of topics does the free-text box (backed by /api/chat, streamed from
  * Gemini) unlock.
@@ -172,18 +173,20 @@ export default function ChatWidget() {
   // never surface the 24xDev AI assistant. Checked after all hooks above.
   if (pathname?.startsWith('/singh')) return null;
 
+  const onQuotePage = pathname === '/contact';
+
   const visibleTopics = aiUnlocked ? TOPICS : [...TOPICS, { id: ASK_AI_ID, label: '💬 Ask me anything else', answer: '' }];
 
   return (
-    <div className="fixed bottom-24 right-6 z-50">
+    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.97 }}
+            initial={{ opacity: 0, y: 16, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.97 }}
-            transition={{ duration: 0.2 }}
-            className="stamp-shadow mb-4 flex h-[28rem] w-[calc(100vw-3rem)] flex-col border border-ink bg-surface sm:w-96"
+            exit={{ opacity: 0, y: 16, scale: 0.98 }}
+            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+            className="stamp-shadow mb-3 flex h-[28rem] w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-3xl border border-line bg-surface sm:w-96"
           >
             <div className="flex items-center justify-between border-b border-line bg-surface-alt px-4 py-3">
               <div className="flex items-center gap-2">
@@ -244,7 +247,7 @@ export default function ChatWidget() {
                 <input
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Ask about pricing, timelines..."
+                  placeholder="Ask about a free quote, timelines..."
                   aria-label="Message"
                   className="flex-1 border border-line bg-surface px-3 py-2 text-sm text-ink placeholder:text-ink-secondary outline-none focus:border-accent"
                 />
@@ -266,16 +269,27 @@ export default function ChatWidget() {
         )}
       </AnimatePresence>
 
-      <motion.button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="stamp-shadow flex h-14 w-14 items-center justify-center border border-ink bg-accent text-accent-ink transition-colors hover:bg-accent-hover"
-        aria-label={open ? 'Close AI chat' : 'Open AI chat'}
-      >
-        {open ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
-      </motion.button>
+      <div className="stamp-shadow flex items-center overflow-hidden rounded-full bg-ink text-paper">
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-label={open ? 'Close AI chat' : 'Open AI chat'}
+          className="inline-flex items-center gap-2 px-4 py-3.5 text-sm font-medium transition-colors hover:bg-white/10"
+        >
+          {open ? <X className="h-4 w-4" /> : <Sparkles className="h-4 w-4 text-accent" />}
+          {open ? 'Close' : 'Ask'}
+        </button>
+        {!onQuotePage && (
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 border-l border-white/15 px-4 py-3.5 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-ink"
+          >
+            <MessageCircle className="h-4 w-4" />
+            Free quote
+            <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
+        )}
+      </div>
     </div>
   );
 }

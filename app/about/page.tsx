@@ -16,9 +16,9 @@ import Panel from '@/components/ui/Panel';
 import Button from '@/components/ui/Button';
 
 export const metadata: Metadata = {
-  title: 'Why 24xDev | Sheffield Software Studio, Serving the UK',
+  title: 'Why 24xDev | London Software Studio, Serving the UK',
   description:
-    'Meet 24xDev — a Sheffield software studio led by Director Gurmanpreet Singh, working with businesses in London, Birmingham and across the UK.',
+    'Meet 24xDev — a London software studio led by Director Gurmanpreet Singh, working with businesses across the UK. Every project starts with a free quote.',
   alternates: { canonical: '/about' },
 };
 
@@ -46,15 +46,15 @@ const values = [
 ];
 
 const process = [
-  { step: '01', title: 'Discovery call', desc: 'A free, no-pressure conversation about your goals, timeline and budget.' },
-  { step: '02', title: 'Proposal & quote', desc: 'A clear, fixed-scope proposal with pricing — no vague hourly estimates.' },
+  { step: '01', title: 'Discovery call', desc: 'A free, no-pressure conversation about your goals, timeline and what success looks like.' },
+  { step: '02', title: 'Free written quote', desc: 'A clear proposal that spells out scope and timeline — sent before any work starts.' },
   { step: '03', title: 'Build in the open', desc: 'Weekly check-ins and a staging link so you watch progress in real time.' },
   { step: '04', title: 'Launch & support', desc: 'We ship, monitor performance, and stay on for ongoing support if you need it.' },
 ];
 
 export default function AboutPage() {
   return (
-    <div className="bg-paper px-6 py-20 transition-colors duration-300 md:py-28">
+    <div className="bg-transparent px-6 py-20 transition-colors duration-300 md:py-28">
       <div className="mx-auto max-w-5xl">
         <Reveal>
           <div className="inline-flex items-center gap-2 border border-line px-5 py-2 font-mono text-xs font-bold uppercase tracking-widest text-ink-secondary">
@@ -66,7 +66,7 @@ export default function AboutPage() {
         <Reveal delay={0.1}>
           <h1 className="mt-8 font-display text-4xl font-semibold leading-[1.1] tracking-tight text-ink sm:text-5xl md:text-6xl">
             Enterprise-grade code. <br className="hidden md:block" />
-            <span className="text-accent">Local Sheffield accountability.</span>
+            <span className="text-accent">Local London accountability.</span>
           </h1>
         </Reveal>
 
@@ -79,7 +79,7 @@ export default function AboutPage() {
                 first discovery call to the final deploy.
               </p>
               <p>
-                We&apos;re based in Sheffield, South Yorkshire, and work with businesses across the UK who are tired
+                We&apos;re based in London and work with businesses worldwide who are tired
                 of slow WordPress builds, unreliable freelancers, and agencies that disappear after invoicing.
               </p>
               <ul className="space-y-4 pt-2">
@@ -87,7 +87,7 @@ export default function AboutPage() {
                   'Direct communication with Director Gurmanpreet Singh',
                   'Built for UK compliance, accessibility and fast local hosting',
                   'Clean, documented codebases with zero vendor lock-in',
-                  'Fixed-scope quotes — no surprise hourly overruns',
+                  'A free written quote before any work starts',
                 ].map((item) => (
                   <li key={item} className="flex gap-3 font-medium text-ink">
                     <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-accent" /> {item}
@@ -111,7 +111,7 @@ export default function AboutPage() {
                 bloat, no jargon, no disappearing after the invoice.&rdquo;
               </blockquote>
               <div className="mt-6 flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-widest text-ink-secondary">
-                <MapPin className="h-4 w-4 text-accent" /> Sheffield, South Yorkshire
+                <MapPin className="h-4 w-4 text-accent" /> London, United Kingdom
               </div>
             </Panel>
           </Reveal>
@@ -165,8 +165,8 @@ export default function AboutPage() {
               Let&apos;s talk about your project.
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-ink-secondary">
-              Book a free, no-obligation consultation with Director Gurmanpreet Singh and get a fixed-scope quote
-              within 48 hours.
+              Tell Director Gurmanpreet Singh what you want to build. You&apos;ll get a free written quote,
+              usually within one business day.
             </p>
             <Button href="/contact" variant="primary" size="lg" className="mt-8">
               Get a Free Quote <ArrowRight className="h-4 w-4" />
