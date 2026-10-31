@@ -122,7 +122,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   let headingIndex = 0;
 
   return (
-    <div className="bg-paper px-6 py-20 transition-colors duration-300 md:py-28">
+    <div className="bg-transparent px-6 py-20 transition-colors duration-300 md:py-28">
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger

@@ -4,7 +4,7 @@ import Button from '@/components/ui/Button';
 
 export default function NotFound() {
   return (
-    <div className="flex min-h-[70vh] flex-col items-center justify-center bg-paper px-6 py-24 text-center transition-colors duration-300">
+    <div className="flex min-h-[70vh] flex-col items-center justify-center bg-transparent px-6 py-24 text-center transition-colors duration-300">
       <Eyebrow as="p">Error 404</Eyebrow>
       <h1 className="mt-4 font-display text-4xl font-semibold text-ink sm:text-5xl">This page went missing.</h1>
       <p className="mt-4 max-w-md text-ink-secondary">

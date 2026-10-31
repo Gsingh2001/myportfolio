@@ -1,147 +1,86 @@
 import type { Metadata } from 'next';
-import {
-  Code2,
-  Cpu,
-  LayoutDashboard,
-  Zap,
-  Clock,
-  Search,
-  ArrowRight,
-  CheckCircle2,
-  ShoppingCart,
-  Workflow,
-} from 'lucide-react';
-import Reveal from '@/components/ui/Reveal';
-import Eyebrow from '@/components/ui/Eyebrow';
-import SectionIndex from '@/components/ui/SectionIndex';
-import Panel from '@/components/ui/Panel';
-import Button from '@/components/ui/Button';
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
+import { PageHero, QuoteBand } from '@/components/marketing/Sections';
 
 export const metadata: Metadata = {
-  title: 'Web Development & AI Services | Sheffield & UK-Wide',
+  title: 'Services | Websites, AI, Commerce & Platforms',
   description:
-    'Full-stack web development, AI integration, e-commerce and custom dashboards for businesses in Sheffield, Birmingham, Manchester and across the UK.',
+    'What 24xDev builds for UK businesses: websites, AI automation, commerce and internal platforms. Start with a free quote from the London studio.',
   alternates: { canonical: '/services' },
 };
 
 const services = [
   {
-    title: 'Full-Stack Web Development',
-    desc: 'Bespoke, lightning-fast websites and web apps built on Next.js, React and Node.js — designed to convert, not just look nice.',
-    icon: Code2,
-    points: ['Marketing sites & landing pages', 'Web applications & customer portals', 'Headless CMS integration'],
+    href: '/services/websites',
+    index: '01',
+    title: 'Websites',
+    text: 'Company sites, campaign sites and product marketing pages. Fast, editable, and structured so search engines and visitors both understand the offer.',
+    points: ['Marketing and brochure sites', 'Headless content so your team can publish', 'Technical SEO and performance as part of the build'],
   },
   {
-    title: 'AI & LLM Integrations',
-    desc: 'Custom AI agents and automations that plug into your existing tools to remove hours of manual, repetitive work.',
-    icon: Cpu,
-    points: ['Support & sales chat agents', 'Document & data processing automation', 'OpenAI / Claude workflow integration'],
+    href: '/services/ai',
+    index: '02',
+    title: 'AI & automation',
+    text: 'Practical AI: assistants that answer from your material, and automations that move data between the systems you already pay for.',
+    points: ['Support and internal assistants', 'Document and inbox extraction', 'A clear view of where AI will not help'],
   },
   {
-    title: 'Custom Dashboards & Portals',
-    desc: 'Secure, purpose-built admin panels and analytics hubs backed by PostgreSQL, tailored to how your team actually works.',
-    icon: LayoutDashboard,
-    points: ['Internal ops & reporting tools', 'Client-facing portals', 'Role-based access & permissions'],
+    href: '/services/commerce',
+    index: '03',
+    title: 'Commerce',
+    text: 'Stores that feel like the brand, with payments, UK VAT and an admin experience your team can run without a developer on the line.',
+    points: ['Custom storefronts', 'Stripe and catalogue integrations', 'Checkout designed for mobile traffic'],
   },
   {
-    title: 'E-commerce Builds',
-    desc: 'Fast, conversion-focused online stores — from a lean headless storefront to a fully custom checkout experience.',
-    icon: ShoppingCart,
-    points: ['Stripe / payment integration', 'Inventory & order management', 'UK VAT-ready checkout flows'],
+    href: '/services/platforms',
+    index: '04',
+    title: 'Platforms',
+    text: 'The tools behind the website: dashboards, client portals and operational software that replaces a pile of spreadsheets.',
+    points: ['Role-based access', 'Reporting your team will actually open', 'PostgreSQL-backed systems you own'],
   },
-  {
-    title: 'SEO & Performance',
-    desc: 'Technical SEO and Core Web Vitals optimisation so your site actually gets found — and keeps visitors once it does.',
-    icon: Zap,
-    points: ['100/100 Core Web Vitals targets', 'Structured data & schema markup', 'Local UK SEO strategy'],
-  },
-  {
-    title: 'Ongoing Support & Retainers',
-    desc: 'Continuous monitoring, updates and small enhancements from the same UK-based team that built your product.',
-    icon: Clock,
-    points: ['Uptime & performance monitoring', 'Security patches & dependency updates', 'Priority-response support hours'],
-  },
-];
-
-const process = [
-  { title: 'Audit', desc: 'We review your current site or idea and flag the biggest opportunities.', icon: Search },
-  { title: 'Build', desc: 'Weekly progress on a live staging link — no black-box development.', icon: Workflow },
-  { title: 'Launch', desc: 'Deployed, monitored, and handed over with clean documentation.', icon: Zap },
 ];
 
 export default function ServicesPage() {
   return (
-    <div className="bg-paper px-6 py-20 transition-colors duration-300 md:py-28">
-      <div className="mx-auto max-w-7xl">
-        <Reveal className="mx-auto max-w-2xl text-center">
-          <Eyebrow className="text-center">Core Services</Eyebrow>
-          <h1 className="mt-3 font-display text-4xl font-semibold text-ink sm:text-5xl">
-            Engineered for speed &amp; scale.
-          </h1>
-          <p className="mt-4 text-ink-secondary">
-            High-performance architectures, custom AI automation, and dashboards built by a UK-based team who answer
-            the phone.
-          </p>
-        </Reveal>
+    <div className="bg-transparent px-6 py-20 md:py-28">
+      <div className="mx-auto max-w-6xl">
+        <PageHero
+          eyebrow="Services"
+          title="Work that has a job to do."
+          lede="Most enquiries are one of four shapes. If yours sits between them, say so — the quote is written for the project, not forced into a package."
+        />
 
-        <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {services.map((svc, idx) => (
-            <Reveal key={svc.title} delay={idx * 0.07}>
-              <Panel className="h-full">
-                <div className="flex h-12 w-12 items-center justify-center border border-ink text-accent">
-                  <svc.icon className="h-6 w-6" />
-                </div>
-                <h3 className="mt-6 font-display text-xl font-semibold text-ink">{svc.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-ink-secondary">{svc.desc}</p>
-                <ul className="mt-5 space-y-2">
-                  {svc.points.map((pt) => (
-                    <li key={pt} className="flex gap-2 text-xs font-medium text-ink-secondary">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent" /> {pt}
-                    </li>
-                  ))}
-                </ul>
-              </Panel>
-            </Reveal>
+        <div className="mt-16 space-y-4">
+          {services.map((service) => (
+            <Link
+              key={service.href}
+              href={service.href}
+              className="group grid gap-6 rounded-3xl border border-line bg-surface p-8 transition-colors hover:border-accent md:grid-cols-[120px_1fr_1fr] md:items-start md:p-10"
+            >
+              <span className="font-mono text-sm text-ink-secondary">{service.index}</span>
+              <div>
+                <h2 className="font-display text-3xl font-semibold text-ink group-hover:text-accent">{service.title}</h2>
+                <p className="mt-3 text-sm leading-relaxed text-ink-secondary">{service.text}</p>
+                <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-ink">
+                  Explore <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </span>
+              </div>
+              <ul className="space-y-3 text-sm text-ink">
+                {service.points.map((point) => (
+                  <li key={point} className="border-t border-line pt-3">
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </Link>
           ))}
         </div>
 
-        {/* Process strip */}
-        <Reveal>
-          <div className="mt-24">
-            <SectionIndex index={5} total={6} label="HOW IT WORKS" />
-            <div className="border border-line bg-surface-alt p-10">
-              <div className="grid gap-10 sm:grid-cols-3">
-                {process.map((p, i) => (
-                  <div key={p.title} className="flex gap-4">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center border border-ink bg-surface font-mono font-black text-ink">
-                      {String(i + 1).padStart(2, '0')}
-                    </div>
-                    <div>
-                      <h4 className="font-display font-semibold text-ink">{p.title}</h4>
-                      <p className="mt-1 text-sm text-ink-secondary">{p.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </Reveal>
-
-        {/* CTA */}
-        <Reveal delay={0.1}>
-          <div className="mt-20 flex flex-col items-center gap-6 border border-line bg-surface p-10 text-center sm:flex-row sm:justify-between sm:text-left">
-            <div>
-              <h2 className="font-display text-2xl font-semibold text-ink sm:text-3xl">Not sure which service fits?</h2>
-              <p className="mt-2 text-ink-secondary">Tell us your goals — we&apos;ll recommend the right scope and a fixed price.</p>
-            </div>
-            <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
-              <Button href="/pricing" variant="secondary">View Pricing</Button>
-              <Button href="/contact" variant="primary">
-                Get a Free Quote <ArrowRight className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        </Reveal>
+        <QuoteBand
+          title="Not sure which one it is?"
+          text="Describe the outcome. We will tell you which shape of work it is, and what a sensible first version includes."
+        />
       </div>
     </div>
   );

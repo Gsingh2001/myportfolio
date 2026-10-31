@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 
-export const alt = '24xDev — Web Development & AI Solutions Agency, Sheffield & UK-Wide';
+export const alt = '24xDev — Web Development & AI Studio, London & Worldwide';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -38,7 +38,7 @@ export default async function Image() {
             textTransform: 'uppercase',
           }}
         >
-          Sheffield &amp; UK-Wide
+          London &amp; Worldwide
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 24, marginTop: 24 }}>

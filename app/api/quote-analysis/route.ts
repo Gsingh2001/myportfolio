@@ -6,6 +6,7 @@ import { QUOTE_ANALYSIS_SYSTEM_PROMPT } from '@/lib/siteContext';
 
 const QuoteAnalysisSchema = z.object({
   projectType: z.string().trim().max(80).optional().default(''),
+  stage: z.string().trim().max(80).optional().default(''),
   budget: z.string().trim().max(80).optional().default(''),
   timeline: z.string().trim().max(80).optional().default(''),
   message: z.string().trim().min(1, 'A project description is required.').max(4000),
@@ -46,12 +47,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid request.' }, { status: 400 });
   }
 
-  const { projectType, budget, timeline, message } = parsed.data;
+  const { projectType, stage, budget, timeline, message } = parsed.data;
 
-  const prompt = `A prospective client just submitted a quote request on 24xDev's website.
+  const prompt = `A prospective client just submitted a free-quote request on 24xDev's website.
+The public site does not publish prices. Do not invent pound amounts or rates.
 
 Project type: ${projectType || 'Not specified'}
-Stated budget: ${budget || 'Not specified'}
+Stage: ${stage || budget || 'Not specified'}
 Timeline: ${timeline || 'Not specified'}
 
 Their project description:
@@ -60,9 +62,9 @@ ${message}
 """
 
 Draft an internal note for the 24xDev team (not sent to the client) covering:
-1. A suggested pricing tier (Launch / Growth / Scale) and rough estimate.
+1. A suggested scope shape (marketing site, web app, e-commerce, AI, dashboard) — no prices.
 2. The key scope items you'd expect this project to need.
-3. Two or three clarifying questions worth asking before quoting.
+3. Two or three clarifying questions worth asking before sending the quote.
 
 Keep it tight — plain text or simple markdown, under 180 words.`;
 

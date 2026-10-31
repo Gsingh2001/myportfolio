@@ -1,30 +1,18 @@
 const areaServed = [
+  { '@type': 'Place', name: 'Worldwide' },
   { '@type': 'Country', name: 'United Kingdom' },
-  { '@type': 'City', name: 'Sheffield' },
-  { '@type': 'City', name: 'London' },
-  { '@type': 'City', name: 'Birmingham' },
-  { '@type': 'City', name: 'Manchester' },
-  { '@type': 'City', name: 'Leeds' },
-  { '@type': 'City', name: 'Liverpool' },
-  { '@type': 'City', name: 'Bristol' },
-  { '@type': 'City', name: 'Newcastle upon Tyne' },
-  { '@type': 'City', name: 'Nottingham' },
-  { '@type': 'City', name: 'Leicester' },
-  { '@type': 'City', name: 'Edinburgh' },
-  { '@type': 'City', name: 'Glasgow' },
-  { '@type': 'City', name: 'Cardiff' },
+  { '@type': 'Continent', name: 'Europe' },
+  { '@type': 'Continent', name: 'North America' },
+  { '@type': 'Continent', name: 'Asia' },
+  { '@type': 'Continent', name: 'Oceania' },
 ];
 
 /**
  * Site-wide Organization/ProfessionalService structured data.
  *
- * `address` intentionally only names the real Sheffield base (city + region,
- * no fabricated street address). `areaServed` is the correct schema.org
- * property for "we work with clients in these places remotely" — unlike
- * `address`, it does not claim a physical branch in each city. This mirrors
- * Google's own guidance for service-area businesses: describe your real
- * service area with `areaServed`/on-page copy rather than spinning up thin,
- * near-identical "city" landing pages, which reads as doorway-page spam.
+ * `address` names London only, with no street. `areaServed` describes remote
+ * clients worldwide. It does not claim an office in each region, and the
+ * site does not spin up city landing pages.
  */
 export default function OrganizationSchema() {
   const data = {
@@ -34,12 +22,18 @@ export default function OrganizationSchema() {
     url: 'https://24xdev.co.uk',
     image: 'https://24xdev.co.uk/opengraph-image',
     description:
-      'UK-based software engineering studio building high-performance websites, AI automation and custom dashboards for businesses across the United Kingdom.',
+      'London software studio building websites, AI automation and custom software for clients worldwide. Projects can be delivered in many languages. Every project starts with a free quote.',
+    slogan: 'Built to be noticed. Engineered to convert.',
+    potentialAction: {
+      '@type': 'CommunicateAction',
+      name: 'Get a free quote',
+      target: 'https://24xdev.co.uk/contact',
+    },
     email: 'contact@24xdev.co.uk',
     address: {
       '@type': 'PostalAddress',
-      addressLocality: 'Sheffield',
-      addressRegion: 'South Yorkshire',
+      addressLocality: 'London',
+      addressRegion: 'England',
       addressCountry: 'GB',
     },
     founder: {

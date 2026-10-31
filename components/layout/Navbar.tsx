@@ -3,17 +3,17 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import Button from '@/components/ui/Button';
 
 const links = [
   { href: '/services', label: 'Services' },
-  { href: '/portfolio', label: 'Portfolio' },
-  { href: '/pricing', label: 'Pricing' },
+  { href: '/portfolio', label: 'Work' },
+  { href: '/process', label: 'Process' },
+  { href: '/about', label: 'Studio' },
   { href: '/blog', label: 'Blog' },
-  { href: '/about', label: 'Why Us' },
-  { href: '/tech', label: 'Tech Stack' },
 ];
 
 export default function Navbar() {
@@ -26,7 +26,7 @@ export default function Navbar() {
   if (pathname?.startsWith('/singh')) return null;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-paper transition-colors duration-300">
+    <header className="sticky top-0 z-50 border-b border-line/80 bg-paper/75 backdrop-blur-xl transition-colors duration-300">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         {/* LOGO */}
         <Link href="/" className="flex items-center gap-2.5" onClick={() => setOpen(false)}>
@@ -44,7 +44,7 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="group relative font-mono text-xs font-semibold uppercase tracking-wider text-ink-secondary transition-colors hover:text-ink"
+              className="group relative text-sm text-ink-secondary transition-colors hover:text-ink"
             >
               {link.label}
               <span className="absolute -bottom-1 left-0 h-px w-0 bg-accent transition-all duration-300 group-hover:w-full" />
@@ -57,7 +57,7 @@ export default function Navbar() {
           <ThemeToggle />
 
           <Button href="/contact" variant="primary" size="sm" className="hidden sm:inline-flex">
-            Get a Quote
+            Free Quote
           </Button>
 
           <button
@@ -73,25 +73,41 @@ export default function Navbar() {
       </div>
 
       {/* MOBILE MENU PANEL */}
-      {open && (
-        <div className="border-t border-line bg-paper px-6 py-6 transition-colors duration-300 lg:hidden">
-          <nav className="flex flex-col gap-1">
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setOpen(false)}
-                className="rounded px-3 py-3 font-mono text-sm font-semibold uppercase tracking-wide text-ink hover:bg-surface-alt"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-          <Button href="/contact" variant="primary" size="md" className="mt-4 w-full" onClick={() => setOpen(false)}>
-            Get a Quote
-          </Button>
-        </div>
-      )}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden border-t border-line bg-paper lg:hidden"
+          >
+            <nav className="flex flex-col gap-1 px-6 py-6">
+              {links.map((link, i) => (
+                <motion.div
+                  key={link.href}
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.04 * i }}
+                >
+                  <Link
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className="block rounded-xl px-3 py-3 text-sm text-ink hover:bg-surface-alt"
+                  >
+                    {link.label}
+                  </Link>
+                </motion.div>
+              ))}
+            </nav>
+            <div className="px-6 pb-6">
+              <Button href="/contact" variant="primary" size="md" className="w-full" onClick={() => setOpen(false)}>
+                Free Quote
+              </Button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
