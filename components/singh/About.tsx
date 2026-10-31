@@ -25,7 +25,7 @@ export default function About() {
             <p>
               MSc Artificial Intelligence graduate (Distinction) from Sheffield Hallam
               University, targeting AI Engineering, Applied AI, and research roles in the UK.
-              My work spans NLP, computer vision, SLAM/odometry, and sensor fusion — usually
+              My work spans NLP, computer vision,ML,S SLAM/odometry, and sensor fusion — usually
               with a generative or retrieval-augmented twist.
             </p>
           </Reveal>
