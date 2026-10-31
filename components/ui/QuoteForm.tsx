@@ -11,11 +11,12 @@ const labelClass = 'mb-2 block text-xs font-medium text-ink-secondary';
 
 const fieldErrorClass = 'mt-1.5 text-xs text-accent';
 
+// Public Formspree hash. Env wins when the Vercel integration sets it;
+// the fallback keeps prerender from throwing when that variable is absent.
+const quoteFormId = process.env.NEXT_PUBLIC_QUOTE_FORM?.trim() || 'xkjwporb';
+
 export default function QuoteForm() {
-  // NEXT_PUBLIC_QUOTE_FORM is set as a Vercel project environment variable
-  // by the Formspree x Vercel integration. For local `next dev`/`next build`,
-  // add the same value to a .env.local file (gitignored).
-  const [state, handleSubmit] = useForm(process.env.NEXT_PUBLIC_QUOTE_FORM as string);
+  const [state, handleSubmit] = useForm(quoteFormId);
   const [analyzing, setAnalyzing] = useState(false);
 
   useEffect(() => {
