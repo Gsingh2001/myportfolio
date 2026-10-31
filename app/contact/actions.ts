@@ -32,11 +32,7 @@ export async function submitQuoteRequest(
   const phone = String(formData.get('phone') || '').trim();
   const company = String(formData.get('companyName') || '').trim();
   const projectType = String(formData.get('projectType') || '').trim();
-<<<<<<< Updated upstream
-  const budget = String(formData.get('budget') || '').trim();
-=======
   const stage = String(formData.get('stage') || '').trim();
->>>>>>> Stashed changes
   const timeline = String(formData.get('timeline') || '').trim();
   const message = String(formData.get('message') || '').trim();
 
@@ -54,22 +50,6 @@ export async function submitQuoteRequest(
     };
   }
 
-<<<<<<< Updated upstream
-  const resendKey = process.env.RESEND_API_KEY;
-  const toEmail = process.env.CONTACT_EMAIL || 'contact@24xdev.co.uk';
-  const fromEmail = process.env.CONTACT_FROM_EMAIL || 'quotes@24xdev.co.uk';
-
-  const summaryLines = [
-    `Name: ${name}`,
-    `Email: ${email}`,
-    `Phone: ${phone || '—'}`,
-    `Company: ${company || '—'}`,
-    `Project type: ${projectType || '—'}`,
-    `Budget: ${budget || '—'}`,
-    `Timeline: ${timeline || '—'}`,
-    '',
-    'Message:',
-=======
   const aiDraft = await draftInternalNote({ projectType, stage, timeline, message });
   const fields = {
     name,
@@ -79,7 +59,6 @@ export async function submitQuoteRequest(
     projectType: projectType || '—',
     stage: stage || '—',
     timeline: timeline || '—',
->>>>>>> Stashed changes
     message,
     aiDraftAnalysis: aiDraft,
   };

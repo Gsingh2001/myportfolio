@@ -1,71 +1,14 @@
 'use client';
 
-<<<<<<< Updated upstream
-import { useState, type FormEvent } from 'react';
-import { useForm, ValidationError } from '@formspree/react';
-import { CheckCircle2, Loader2, Send, Sparkles } from 'lucide-react';
-=======
 import { useActionState, useEffect } from 'react';
 import { CheckCircle2, Loader2, Send } from 'lucide-react';
 import { submitQuoteRequest, type QuoteFormState } from '@/app/contact/actions';
->>>>>>> Stashed changes
 
 const inputClass =
-  'w-full rounded border border-line bg-surface px-4 py-3 text-sm text-ink placeholder:text-ink-secondary outline-none transition-colors focus:border-accent';
+  'w-full rounded-2xl border border-line bg-surface px-4 py-3 text-sm text-ink placeholder:text-ink-secondary outline-none transition-colors focus:border-accent';
 
-const labelClass = 'block text-xs font-bold uppercase tracking-wider text-ink-secondary mb-2 font-mono';
+const labelClass = 'mb-2 block text-xs font-medium text-ink-secondary';
 
-<<<<<<< Updated upstream
-const fieldErrorClass = 'mt-1.5 text-xs text-accent';
-
-export default function QuoteForm() {
-  // NEXT_PUBLIC_QUOTE_FORM is set as a Vercel project environment variable
-  // by the Formspree x Vercel integration. For local `next dev`/`next build`,
-  // add the same value to a .env.local file (gitignored).
-  const [state, handleSubmit] = useForm(process.env.NEXT_PUBLIC_QUOTE_FORM as string);
-  const [analyzing, setAnalyzing] = useState(false);
-
-  // Best-effort Gemini pre-analysis: before the real Formspree submission
-  // goes out, we ask /api/quote-analysis to draft a short internal triage
-  // note (suggested tier, scope, clarifying questions) and drop it into the
-  // hidden `aiDraftAnalysis` field below, so it rides along in the same
-  // notification email the team already gets. If Gemini isn't configured,
-  // times out, or errors, we simply skip it and submit the form as normal —
-  // this must never block or slow down a real quote request meaningfully.
-  async function onSubmit(e: FormEvent<HTMLFormElement>) {
-    const form = e.currentTarget;
-    setAnalyzing(true);
-    try {
-      const formData = new FormData(form);
-      const res = await fetch('/api/quote-analysis', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          projectType: String(formData.get('projectType') ?? ''),
-          budget: String(formData.get('budget') ?? ''),
-          timeline: String(formData.get('timeline') ?? ''),
-          message: String(formData.get('message') ?? ''),
-        }),
-        signal: AbortSignal.timeout(8000),
-      });
-      if (res.ok) {
-        const data = await res.json().catch(() => null);
-        if (data?.draft) {
-          const hidden = form.elements.namedItem('aiDraftAnalysis') as HTMLInputElement | null;
-          if (hidden) hidden.value = data.draft;
-        }
-      }
-    } catch {
-      // Gemini unavailable, rate-limited, or slow — fine, submit without it.
-    } finally {
-      setAnalyzing(false);
-    }
-
-    handleSubmit(e);
-  }
-
-  if (state.succeeded) {
-=======
 const initialState: QuoteFormState = { status: 'idle', message: '' };
 
 export default function QuoteForm() {
@@ -90,7 +33,6 @@ export default function QuoteForm() {
   }, [state.status]);
 
   if (state.status === 'success') {
->>>>>>> Stashed changes
     return (
       <div className="rounded border border-line bg-surface-alt p-8 text-center">
         <CheckCircle2 className="mx-auto h-10 w-10 text-accent" />
@@ -144,16 +86,6 @@ export default function QuoteForm() {
           </select>
         </div>
         <div>
-<<<<<<< Updated upstream
-          <label htmlFor="budget" className={labelClass}>Budget (GBP)</label>
-          <select id="budget" name="budget" defaultValue="" className={inputClass}>
-            <option value="" disabled>Select a range</option>
-            <option>Under £2,000</option>
-            <option>£2,000 – £5,000</option>
-            <option>£5,000 – £15,000</option>
-            <option>£15,000+</option>
-            <option>Not sure yet</option>
-=======
           <label htmlFor="stage" className={labelClass}>Where are you?</label>
           <select id="stage" name="stage" defaultValue="" className={inputClass}>
             <option value="">Select one</option>
@@ -161,7 +93,6 @@ export default function QuoteForm() {
             <option>Ready to brief a team</option>
             <option>Replacing an existing site</option>
             <option>Need it launched soon</option>
->>>>>>> Stashed changes
           </select>
         </div>
         <div>
@@ -198,13 +129,8 @@ export default function QuoteForm() {
         <p className="text-xs text-ink-secondary">We reply within 1 business day. No spam, ever.</p>
         <button
           type="submit"
-<<<<<<< Updated upstream
-          disabled={state.submitting || analyzing}
-          className="stamp-shadow inline-flex w-full items-center justify-center gap-2 rounded bg-accent px-8 py-4 font-mono text-sm font-bold uppercase tracking-wide text-accent-ink transition-colors hover:bg-accent-hover disabled:opacity-70 sm:w-auto"
-=======
           disabled={pending}
           className="stamp-shadow inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-8 py-4 text-sm font-medium text-paper transition-colors hover:bg-accent hover:text-accent-ink disabled:opacity-70 sm:w-auto"
->>>>>>> Stashed changes
         >
           {pending ? (
             <>
